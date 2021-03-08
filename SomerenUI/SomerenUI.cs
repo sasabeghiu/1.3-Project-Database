@@ -31,6 +31,7 @@ namespace SomerenUI
             {
                 // hide all other panels
                 pnlStudents.Hide();
+                pnlTeachers.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -41,6 +42,7 @@ namespace SomerenUI
                 // hide all other panels
                 pnlDashboard.Hide();
                 imgDashboard.Hide();
+                pnlTeachers.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -48,8 +50,8 @@ namespace SomerenUI
                 try
                 {
                     // fill the students listview within the students panel with a list of students
-                    StudentService studService = new StudentService(); 
-                    List<Student> studentList = studService.GetStudents(); 
+                    StudentService studService = new StudentService();
+                    List<Student> studentList = studService.GetStudents();
 
                     // clear the listview before filling it again
                     listViewStudents.Clear();
@@ -72,11 +74,48 @@ namespace SomerenUI
                     MessageBox.Show("Something went wrong while loading the students: " + e.Message);
                 }
             }
+            else if (panelName == "Lecturers")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+
+                // show students
+                pnlTeachers.Show();
+
+                try
+                {
+                    // fill the teachers listview within the teachers panel with a list of teachers
+                    TeacherService teacherService = new TeacherService();
+                    List<Teacher> teacherList = teacherService.GetTeachers();
+
+                    // clear the listview before filling it again
+                    listviewTeachers.Clear();
+                    listviewTeachers.View = View.Details; // Enable rows
+                    listviewTeachers.Columns.Add("Teacher ID"); // Add colums
+                    listviewTeachers.Columns.Add("First Name");
+                    listviewTeachers.Columns.Add("Last Name");
+                    listviewTeachers.Columns.Add("Supervisor");
+
+                    foreach (Teacher t in teacherList)
+                    {
+                        ListViewItem li2 = new ListViewItem(new String[] { t.Number.ToString(), t.FirstName, t.LastName, t.Supervisor});
+                        listviewTeachers.Items.Add(li2);
+                    }
+                    listviewTeachers.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listviewTeachers.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the teachers: " + e.Message);
+                }
+            }
         }
 
         private void dashboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,14 +147,15 @@ namespace SomerenUI
         {
 
         }
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void listViewTeachers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showPanel("Teachers");
+
         }
 
-        private void listviewTeachers_SelectedIndexChanged(object sender, EventArgs e)
+        private void lecturersToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-
+            showPanel("Lecturers");
         }
     }
 }
