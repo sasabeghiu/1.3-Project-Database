@@ -135,12 +135,12 @@ namespace SomerenUI
                     listviewRooms.Clear();
                     listviewRooms.View = View.Details; // Enable rows
                     listviewRooms.Columns.Add("Room ID"); // Add colums
-                    listviewRooms.Columns.Add("Room Size");
                     listviewRooms.Columns.Add("Room Type");
+                    listviewRooms.Columns.Add("Room Capacity");
 
                     foreach (Room r in roomList)
                     {
-                        ListViewItem li3 = new ListViewItem(new String[] { r.Number.ToString(), r.Capacity.ToString(), r.Type });
+                        ListViewItem li3 = new ListViewItem(new String[] { r.Number.ToString(), r.Type, r.Capacity.ToString() });
                         listviewRooms.Items.Add(li3);
                     }
                     listviewRooms.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
