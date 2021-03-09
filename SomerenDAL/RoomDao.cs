@@ -27,8 +27,8 @@ namespace SomerenDAL
             {
                 Room room = new Room()
                 {
-                    Number = (int)dr["StudentId"],
-                    Type = (bool)(dr["Room_Type"]),
+                    Number = (int)dr["RoomNr"],
+                    Type = (string)(dr["Room_Type"]),
                     Capacity = (int)(dr["Room_Size"])
                 };
                 rooms.Add(room);
