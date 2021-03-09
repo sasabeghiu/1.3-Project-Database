@@ -256,9 +256,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(10, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 29);
+            this.label1.Size = new System.Drawing.Size(113, 29);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Teachers";
+            this.label1.Text = "Lecturers";
             // 
             // listviewTeachers
             // 
@@ -297,7 +297,7 @@
             this.pnlRooms.Controls.Add(this.pictureBox3);
             this.pnlRooms.Controls.Add(this.label2);
             this.pnlRooms.Controls.Add(this.listviewRooms);
-            this.pnlRooms.Location = new System.Drawing.Point(15, 24);
+            this.pnlRooms.Location = new System.Drawing.Point(12, 24);
             this.pnlRooms.Name = "pnlRooms";
             this.pnlRooms.Size = new System.Drawing.Size(935, 463);
             this.pnlRooms.TabIndex = 9;

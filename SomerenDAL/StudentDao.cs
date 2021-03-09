@@ -11,10 +11,10 @@ using SomerenModel;
 namespace SomerenDAL
 {
     public class StudentDao : BaseDao
-    {      
+    {
         public List<Student> GetAllStudents()
         {
-            string query = "SELECT StudentId, FirstName, LastName FROM [Student]";
+            string query = "SELECT StudentId, FirstName, LastName, DateOfBirth FROM [Student]"; // selecting the information we need from database
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -27,9 +27,10 @@ namespace SomerenDAL
             {
                 Student student = new Student()
                 {
-                    Number = (int)dr["StudentId"],
+                    Number = (int)dr["StudentId"], //assigning the data to the properties in model class
                     FirstName = (string)(dr["FirstName"].ToString()),
-                    LastName = (string)(dr["LastName"].ToString())
+                    LastName = (string)(dr["LastName"].ToString()),
+                    BirthDate = (DateTime)(dr["DateOfBirth"])
                 };
                 students.Add(student);
             }

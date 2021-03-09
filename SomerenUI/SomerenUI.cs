@@ -57,23 +57,25 @@ namespace SomerenUI
 
                     // clear the listview before filling it again
                     listViewStudents.Clear();
-                    listViewStudents.View = View.Details; // Enable rows
-                    listViewStudents.Columns.Add("Student ID"); // Add colums
+                    //set the view to show details
+                    listViewStudents.View = View.Details; 
+                    //creating columnss for items
+                    listViewStudents.Columns.Add("Student ID"); 
                     listViewStudents.Columns.Add("First Name");
                     listViewStudents.Columns.Add("Last Name");
                     listViewStudents.Columns.Add("Date Of Birth");
 
                     foreach (Student s in studentList)
                     {
-                        ListViewItem li1 = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName, s.LastName, s.BirthDate.ToString() });
+                        ListViewItem li1 = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName, s.LastName, s.BirthDate.ToString("dd/MM/yyyy") });//creating the items we need
                         listViewStudents.Items.Add(li1);
                     }
                     listViewStudents.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
-                    listViewStudents.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
+                    listViewStudents.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Auto resize headers to fit
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Something went wrong while loading the students: " + e.Message);
+                    MessageBox.Show("Something went wrong while loading the students: " + e.Message); //error messages are showed in a separate window
                 }
             }
             else if (panelName == "Lecturers")
@@ -136,7 +138,7 @@ namespace SomerenUI
                     listviewRooms.View = View.Details; // Enable rows
                     listviewRooms.Columns.Add("Room ID"); // Add colums
                     listviewRooms.Columns.Add("Room Type");
-                    listviewRooms.Columns.Add("Room Capacity");
+                    listviewRooms.Columns.Add("Number of beds");
 
                     foreach (Room r in roomList)
                     {
