@@ -33,6 +33,7 @@ namespace SomerenUI
                 pnlStudents.Hide();
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
+                pnlDrinks.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -45,6 +46,7 @@ namespace SomerenUI
                 imgDashboard.Hide();
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
+                pnlDrinks.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -58,9 +60,9 @@ namespace SomerenUI
                     // clear the listview before filling it again
                     listViewStudents.Clear();
                     //set the view to show details
-                    listViewStudents.View = View.Details; 
+                    listViewStudents.View = View.Details;
                     //creating columnss for items
-                    listViewStudents.Columns.Add("Student ID"); 
+                    listViewStudents.Columns.Add("Student ID");
                     listViewStudents.Columns.Add("First Name");
                     listViewStudents.Columns.Add("Last Name");
                     listViewStudents.Columns.Add("Date Of Birth");
@@ -85,6 +87,7 @@ namespace SomerenUI
                 imgDashboard.Hide();
                 pnlStudents.Hide();
                 pnlRooms.Hide();
+                pnlDrinks.Hide();
 
                 // show teachers
                 pnlTeachers.Show();
@@ -105,7 +108,7 @@ namespace SomerenUI
 
                     foreach (Teacher t in teacherList)
                     {
-                        ListViewItem li2 = new ListViewItem(new String[] { t.Number.ToString(), t.FirstName, t.LastName, t.Supervisor});
+                        ListViewItem li2 = new ListViewItem(new String[] { t.Number.ToString(), t.FirstName, t.LastName, t.Supervisor });
                         listviewTeachers.Items.Add(li2);
                     }
                     listviewTeachers.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
@@ -123,6 +126,7 @@ namespace SomerenUI
                 imgDashboard.Hide();
                 pnlStudents.Hide();
                 pnlTeachers.Hide();
+                pnlDrinks.Hide();
 
                 // show rooms
                 pnlRooms.Show();
@@ -151,6 +155,45 @@ namespace SomerenUI
                 catch (Exception e)
                 {
                     MessageBox.Show("Something went wrong while loading the rooms: " + e.Message);
+                }
+            }
+            else if (panelName == "Drinks Supplies")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+
+                // show drinks
+                pnlDrinks.Show();
+
+                try
+                {
+                    // fill the drinks listview within the drinks panel with a list of drinks
+                    DrinkService drinkService = new DrinkService();
+                    List<Drink> drinkList = drinkService.GetDrinks();
+
+                    // clear the listview before filling it again
+                    listviewDrinks.Clear();
+                    listviewDrinks.View = View.Details; // Enable rows
+                    listviewDrinks.Columns.Add("Drink ID"); // Add colums
+                    listviewDrinks.Columns.Add("Drink Name");
+                    listviewDrinks.Columns.Add("Drink Price");
+                    listviewDrinks.Columns.Add("Drink Stock");
+
+                    foreach (Drink d in drinkList)
+                    {
+                        ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
+                        listviewDrinks.Items.Add(li4);
+                    }
+                    listviewDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listviewDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the drinks: " + e.Message);
                 }
             }
         }
@@ -206,6 +249,21 @@ namespace SomerenUI
         }
 
         private void listviewRooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Drinks Supplies");
+        }
+
+        private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
