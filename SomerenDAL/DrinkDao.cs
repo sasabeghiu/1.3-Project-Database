@@ -14,9 +14,16 @@ namespace SomerenDAL
     {
         private SqlConnection conn;
         //returns a list of drinks from database
-        public List<Drink> GetAllDrinks()
+        public List<Drink> GetAllDrinks() //finish the query(pdf) and ask Mark
         {
-            string query = "SELECT DrinkId, Name, Stock, Price FROM [Drink]"; // selecting the information we need from table Drink
+            string query = "SELECT DrinkId, Name, Stock, Price " +              // Select all drinks 
+                           "FROM [Drink] " +
+                           "WHERE Stock > 1 AND Price > 1 " +                   // that have a stock > 1 and price > 1 drinks token
+                           "AND Name NOT LIKE '%Water%' " +
+                           "AND Name NOT LIKE '%Orange%' " +
+                           "AND Name NOT LIKE '%Cherry%'" +                     // Do not include the drinks 'Water', 'Orangeade' and 'Cherry juice' in the list.
+                           "ORDER BY Stock DESC, Price DESC";                   // sorted according to stock, according to sales value + (add drinks sold?)
+            
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
