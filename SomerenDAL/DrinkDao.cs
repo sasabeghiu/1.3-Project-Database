@@ -14,7 +14,7 @@ namespace SomerenDAL
     {
         private SqlConnection conn;
         //returns a list of drinks from database
-        public List<Drink> GetAllDrinks() //finish the query(pdf) and ask Mark
+        public List<Drink> GetAllDrinks()                                       //finish the query(pdf) and ask Mark
         {
             string query = "SELECT DrinkId, Name, Stock, Price " +              // Select all drinks 
                            "FROM [Drink] " +
