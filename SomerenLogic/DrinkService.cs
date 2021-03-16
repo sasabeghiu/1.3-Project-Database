@@ -24,14 +24,14 @@ namespace SomerenLogic
             return drinks;
         }
         //adds a drink using the method from dao class
-        public void AddDrink(string name, int stock, int price)
+        public void AddDrink(Drink drink)
         {
-            drinkdb.AddDrink(name, stock, price);
+            drinkdb.AddDrink(drink);
         }
         //updates a drink using the method from dao class
-        public void UpdateDrink(Drink drink, string name, int stock, int price)
+        public void UpdateDrink(Drink drink)
         {
-            drinkdb.UpdateDrink(drink, name, stock, price);
+            drinkdb.UpdateDrink(drink);
         }
         //removes a drink using the method from dao class
         public void RemoveDrink(Drink drink)

@@ -12,5 +12,9 @@ namespace SomerenModel
         public string Name { get; set; } //drink name
         public int Stock { get; set; } //amount of drink
         public int Price { get; set; } // sales price
+        public Drink()
+        {
+
+        }
     }
 }

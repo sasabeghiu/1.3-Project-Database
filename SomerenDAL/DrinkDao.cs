@@ -7,12 +7,13 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Collections.ObjectModel;
 using SomerenModel;
+using System.Configuration;
 
 namespace SomerenDAL
 {
     public class DrinkDao : BaseDao
     {
-        private SqlConnection conn;
+        private SqlConnection dbConnection;
         //returns a list of drinks from database
         public List<Drink> GetAllDrinks()                                       //finish the query(pdf) and ask Mark
         {
@@ -23,7 +24,7 @@ namespace SomerenDAL
                            "AND Name NOT LIKE '%Orange%' " +
                            "AND Name NOT LIKE '%Cherry%'" +                     // Do not include the drinks 'Water', 'Orangeade' and 'Cherry juice' in the list.
                            "ORDER BY Stock DESC, Price DESC";                   // sorted according to stock, according to sales value + (add drinks sold?)
-            
+
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -46,38 +47,79 @@ namespace SomerenDAL
             return drinks;
         }
         //add drink
-        public void AddDrink(string name, int stock, int price)
+        public void AddDrink(Drink drink)
         {
-            OpenConnection();
-            SqlCommand cmd = new SqlCommand("INSERT INTO [Drink] VALUES(@Stock,@Name,@Price); ", conn);
-            cmd.Parameters.AddWithValue("@Stock", stock);
-            cmd.Parameters.AddWithValue("@Name", name);
-            cmd.Parameters.AddWithValue("@Price", price);
-            SqlDataReader reader = cmd.ExecuteReader();
-            reader.Close();
-            conn.Close();
+            try
+            {
+                OpenConnection();
+                /*SqlCommand command = new SqlCommand("INSERT INTO Drink (Id, Name, Stock, Price) VALUES (@Id, @Name, @Stock, @Price); " +
+                    "SELECT SCOPE_IDENTITY();", dbConnection);
+                command.Parameters.AddWithValue("@Id", drink.Id);
+                command.Parameters.AddWithValue("@Stock", drink.Stock);
+                command.Parameters.AddWithValue("@Name", drink.Name);
+                command.Parameters.AddWithValue("@Price", drink.Price);
+                //drink.Id = Convert.ToInt32(command.ExecuteScalar());*/
+
+                string query = "INSERT INTO Drink" +
+                               "VALUES(DrinkId" + drink.Id + ", Name" + drink.Name + ", Stock" + drink.Stock + ", Price" + drink.Price + ")";
+                SqlParameter[] sqlParameters = new SqlParameter[0];
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("Adding drinks failed!");
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
         //modify drink
-        public void UpdateDrink(Drink drink, string name, int stock, int price)
+        public void UpdateDrink(Drink drink)
         {
-            OpenConnection();
-            SqlCommand cmd = new SqlCommand("UPDATE [Drink] set Stock = @Stock, Name = @Name, Price = @Price where DrinkId = @Id; ", conn);
-            cmd.Parameters.AddWithValue("@Stock", stock);
-            cmd.Parameters.AddWithValue("@Name", name);
-            cmd.Parameters.AddWithValue("@Price", price);
-            cmd.Parameters.AddWithValue("@Id", drink.Id);
-            SqlDataReader reader = cmd.ExecuteReader();
-            reader.Close();
-            conn.Close();
+            try
+            {
+                OpenConnection();
+                /*SqlCommand command = new SqlCommand("UPDATE Drink SET Stock = @Stock, Name = @Name, Price = @Price WHERE DrinkId = @DrinkId; ", dbConnection);
+                command.Parameters.AddWithValue("@Stock", drink.Stock);
+                command.Parameters.AddWithValue("@Name", drink.Name);
+                command.Parameters.AddWithValue("@Price", drink.Price);
+                command.Parameters.AddWithValue("@DrinkId", drink.Id);*/
+
+                string query = "UPDATE Drink SET Name='" + drink.Name + "', Price=" + drink.Price + ", Stock=" + drink.Stock + " WHERE [DrinkId]=" + drink.Id;
+                SqlParameter[] sqlParameters = new SqlParameter[0];
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("Updating drinks failed!");
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
         //remove drink
         public void RemoveDrink(Drink drink)
         {
-            SqlCommand cmd = new SqlCommand("DELETE FROM Drink WHERE DrinkId=@Id;", conn);
-            cmd.Parameters.AddWithValue("@Id", drink.Id);
-            SqlDataReader reader = cmd.ExecuteReader();
-            reader.Close();
-            conn.Close();
+            try
+            {
+                OpenConnection();
+                //SqlCommand command = new SqlCommand("DELETE FROM Drink WHERE DrinkId = @DrinkId", dbConnection);
+                //command.Parameters.AddWithValue("@DrinkId", drink.Id);
+
+                string query = "DELETE FROM Drink WHERE [DrinkId]=" + drink.Id;
+                SqlParameter[] sqlParameters = new SqlParameter[0];
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("Deleting drinks failed!");
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
     }
 }

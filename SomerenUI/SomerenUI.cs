@@ -14,9 +14,14 @@ namespace SomerenUI
 {
     public partial class SomerenUI : Form
     {
+        DrinkService drinkService;
         public SomerenUI()
         {
             InitializeComponent();
+            drinkService = new DrinkService();
+            //make the delete button unable to use untill an item is selected and hide the label until there is an error
+            btnDeleteDrink.Enabled = false;
+            lblError.Visible = false;
         }
 
         private void SomerenUI_Load(object sender, EventArgs e)
@@ -26,7 +31,6 @@ namespace SomerenUI
 
         private void showPanel(string panelName)
         {
-
             if (panelName == "Dashboard")
             {
                 // hide all other panels
@@ -172,7 +176,6 @@ namespace SomerenUI
                 try
                 {
                     // fill the drinks listview within the drinks panel with a list of drinks
-                    DrinkService drinkService = new DrinkService();
                     List<Drink> drinkList = drinkService.GetDrinks();
 
                     // clear the listview before filling it again
@@ -183,10 +186,13 @@ namespace SomerenUI
                     listviewDrinks.Columns.Add("Drink Price");
                     listviewDrinks.Columns.Add("Drink Stock");
 
+                    listviewDrinks.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
                     foreach (Drink d in drinkList)
                     {
                         ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
                         listviewDrinks.Items.Add(li4);
+                        li4.Tag = d;
                     }
                     listviewDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
                     listviewDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
@@ -260,12 +266,87 @@ namespace SomerenUI
 
         private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //make the button available if an item was selected
+            btnDeleteDrink.Enabled = listviewDrinks.SelectedItems.Count >= 0;
+            
+            if (listviewDrinks.SelectedItems.Count >= 0)
+            {
+                Drink drink = (Drink)listviewDrinks.Items[0].Tag; // change?
 
+                txtIddrink.Text = drink.Id.ToString();
+                txtDrinkName.Text = drink.Name;
+                txtDrinkStock.Text = drink.Stock.ToString();
+                txtDrinkPrice.Text = drink.Price.ToString();
+            }
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void btnDeleteDrink_Click(object sender, EventArgs e)
         {
+            lblError.Visible = false; //hide the error label
+            if (listviewDrinks.SelectedItems.Count >= 0)
+            {
+                Drink drink = (Drink)listviewDrinks.Items[0].Tag;
+                try
+                {
+                    drinkService.RemoveDrink(drink);
+                }
+                catch (Exception exp)
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Error occured: " + exp.Message;
+                }
+            }
+        }
 
+        private void btnModifyDrink_Click(object sender, EventArgs e)
+        {
+            if (listviewDrinks.SelectedItems.Count < 0)
+                return;
+            Drink drink = (Drink)listviewDrinks.Items[0].Tag;
+            drink.Id = int.Parse(txtIddrink.Text);
+            drink.Name = txtDrinkName.Text.ToString();
+            drink.Stock = int.Parse(txtDrinkStock.Text);
+            drink.Price = int.Parse(txtDrinkPrice.Text);
+            try
+            {
+                drinkService.UpdateDrink(drink);
+            }
+            catch (Exception exp)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Error occured: " + exp.Message;
+            }
+        }
+        private void btnAddDrink_Click(object sender, EventArgs e)
+        {
+            Drink drink = new Drink();
+
+            drink.Id = int.Parse(txtIddrink.Text);
+            drink.Name = txtDrinkName.Text.ToString();
+            drink.Stock = int.Parse(txtDrinkStock.Text);
+            drink.Price = int.Parse(txtDrinkPrice.Text);
+            try
+            {
+                drinkService.AddDrink(drink);
+            }
+            catch (Exception exp)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Error occured: " + exp.Message;
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            //refreshing the list with drinks 
+            listviewDrinks.Items.Clear();
+            List<Drink> drinkList = drinkService.GetDrinks();
+            foreach (Drink d in drinkList)
+            {
+                ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
+                listviewDrinks.Items.Add(li4);
+                li4.Tag = d;
+            }
         }
     }
 }
