@@ -265,7 +265,7 @@ namespace SomerenUI
             showPanel("Drinks Supplies");
         }
 
-        private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e) //actions for listview drinks
         {
             //make the button deletedrink available only if an item was selected
             btnDeleteDrink.Enabled = listviewDrinks.SelectedItems.Count >= 0;
@@ -285,12 +285,12 @@ namespace SomerenUI
             lblError.Visible = false; //hide the error label
             if (listviewDrinks.SelectedItems.Count == 1)
             {
-                Drink drink = (Drink)listviewDrinks.Items[0].Tag;
+                Drink drink = (Drink)listviewDrinks.SelectedItems[0].Tag;
                 try
                 {
                     drinkService.RemoveDrink(drink);
                 }
-                catch (Exception exp)
+                catch (Exception exp) //if theres any error show in the label
                 {
                     lblError.Visible = true;
                     lblError.Text = "Error occured: " + exp.Message;
@@ -311,19 +311,22 @@ namespace SomerenUI
         {
             if (listviewDrinks.SelectedItems.Count < 0)
                 return;
-            Drink drink = (Drink)listviewDrinks.Items[0].Tag;
+            if (listviewDrinks.SelectedItems.Count == 1)
+            {
+                Drink drink = (Drink)listviewDrinks.SelectedItems[0].Tag;
 
-            drink.Name = txtDrinkName.Text.ToString();
-            drink.Stock = int.Parse(txtDrinkStock.Text);
-            drink.Price = int.Parse(txtDrinkPrice.Text);
-            try
-            {
-                drinkService.UpdateDrink(drink);
-            }
-            catch (Exception exp)
-            {
-                lblError.Visible = true;
-                lblError.Text = "Error occured: " + exp.Message;
+                drink.Name = txtDrinkName.Text.ToString();
+                drink.Stock = int.Parse(txtDrinkStock.Text);
+                drink.Price = int.Parse(txtDrinkPrice.Text);
+                try
+                {
+                    drinkService.UpdateDrink(drink);
+                }
+                catch (Exception exp) //if theres any error show in the label
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Error occured: " + exp.Message;
+                }
             }
             //refreshing the list with drinks 
             listviewDrinks.Items.Clear();
@@ -338,9 +341,9 @@ namespace SomerenUI
 
         private void btnAddDrink_Click(object sender, EventArgs e) //button Add Drink
         {
-            Drink drink = new Drink();
-
-            drink.Name = txtDrinkName.Text.ToString();
+            Drink drink = new Drink(); //create a new object
+             
+            drink.Name = txtDrinkName.Text.ToString();  //assign objects parameters from text boxes
             drink.Stock = int.Parse(txtDrinkStock.Text);
             drink.Price = int.Parse(txtDrinkPrice.Text);
             try

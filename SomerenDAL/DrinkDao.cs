@@ -13,17 +13,16 @@ namespace SomerenDAL
 {
     public class DrinkDao : BaseDao
     {
-        private SqlConnection dbConnection;
         //returns a list of drinks from database
         public List<Drink> GetAllDrinks()                                       
         {
-            string query = "SELECT DrinkId, Name, Stock, Price " +              // Select all drinks 
+            string query = "SELECT DrinkId, Name, Stock, Price " +     // Select all drinks 
                            "FROM [Drink] " +
-                           "WHERE Stock > 1 AND Price > 1 " +                   // that have a stock > 1 and price > 1 drinks token
+                           "WHERE Stock > 1 AND Price > 1 " +          // that have a stock > 1 and price > 1 drinks token
                            "AND Name NOT LIKE '%Water%' " +
                            "AND Name NOT LIKE '%Orange%' " +
-                           "AND Name NOT LIKE '%Cherry%'" +                     // Do not include the drinks 'Water', 'Orangeade' and 'Cherry juice' in the list.
-                           "ORDER BY Stock DESC, Price DESC";                   // sorted according to stock, according to sales value + (add drinks sold?)
+                           "AND Name NOT LIKE '%Cherry%'" +            // Do not include the drinks 'Water', 'Orangeade' and 'Cherry juice' in the list.
+                           "ORDER BY Stock DESC, Price DESC";          // sorted according to stock, according to sales value + (add drinks sold?)
 
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -52,16 +51,6 @@ namespace SomerenDAL
             try
             {
                 OpenConnection();
-                /*SqlCommand command = new SqlCommand(
-                    "INSERT INTO Drink (Name, Stock, Price) " +
-                                "VALUES (@Name, @Stock, @Price); " +
-                                "SELECT SCOPE_IDENTITY();",
-                    dbConnection);
-                command.Parameters.AddWithValue("@Stock", drink.Stock);
-                command.Parameters.AddWithValue("@Name", drink.Name);
-                command.Parameters.AddWithValue("@Price", drink.Price);
-                drink.Id = Convert.ToInt32(command.ExecuteScalar());*/ //that was the way Gerwin showed us but it didnt work
-
                 string query = "INSERT INTO Drink (Name, Stock, Price)" +
                                "VALUES('"+drink.Name+"','"+drink.Stock+"','"+drink.Price+"') ;";
                 SqlParameter[] sqlParameters = new SqlParameter[0];
@@ -69,7 +58,7 @@ namespace SomerenDAL
             }
             catch (Exception exp)
             {
-                throw new Exception("Adding drinks failed!");
+                throw new Exception("Adding drinks failed: " + exp);
             }
             finally
             {
@@ -82,19 +71,14 @@ namespace SomerenDAL
             try
             {
                 OpenConnection();
-                /*SqlCommand command = new SqlCommand("UPDATE Drink SET Stock = @Stock, Name = @Name, Price = @Price WHERE DrinkId = @DrinkId; ", dbConnection);
-                command.Parameters.AddWithValue("@Stock", drink.Stock);
-                command.Parameters.AddWithValue("@Name", drink.Name);
-                command.Parameters.AddWithValue("@Price", drink.Price);
-                command.Parameters.AddWithValue("@DrinkId", drink.Id);*/ //that was the way Gerwin showed us but it didnt work
-
-                string query = "UPDATE Drink SET Name='" + drink.Name + "', Price=" + drink.Price + ", Stock=" + drink.Stock + " WHERE [DrinkId]=" + drink.Id;
+                string query = "UPDATE Drink SET " +
+                               "Name='" + drink.Name + "', Price=" + drink.Price + ", Stock=" + drink.Stock + " WHERE [DrinkId]=" + drink.Id;
                 SqlParameter[] sqlParameters = new SqlParameter[0];
                 ExecuteEditQuery(query, sqlParameters);
             }
             catch (Exception exp)
             {
-                throw new Exception("Updating drinks failed!");
+                throw new Exception("Updating drinks failed: " + exp);
             }
             finally
             {
@@ -107,16 +91,13 @@ namespace SomerenDAL
             try
             {
                 OpenConnection();
-                //SqlCommand command = new SqlCommand("DELETE FROM Drink WHERE DrinkId = @DrinkId", dbConnection);
-                //command.Parameters.AddWithValue("@DrinkId", drink.Id); //that was the way Gerwin showed us but it didnt work
-
                 string query = "DELETE FROM Drink WHERE [DrinkId]=" + drink.Id;
                 SqlParameter[] sqlParameters = new SqlParameter[0];
                 ExecuteEditQuery(query, sqlParameters);
             }
             catch (Exception exp)
             {
-                throw new Exception("Deleting drinks failed!");
+                throw new Exception("Deleting drinks failed: " + exp);
             }
             finally
             {

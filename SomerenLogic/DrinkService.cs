@@ -13,28 +13,28 @@ namespace SomerenLogic
     {
         DrinkDao drinkdb;
 
-        public DrinkService()
+        public DrinkService() //basic constructor creating an dao object
         {
             drinkdb = new DrinkDao();
         }
 
-        public List<Drink> GetDrinks()//get a list with all drinks from db
+        public List<Drink> GetDrinks() //get a list with all drinks from db
         {
             List<Drink> drinks = drinkdb.GetAllDrinks();
             return drinks;
         }
-        //adds a drink using the method from dao class
-        public void AddDrink(Drink drink)
+       
+        public void AddDrink(Drink drink) //adds a drink using the method from dao class
         {
             drinkdb.AddDrink(drink);
         }
-        //updates a drink using the method from dao class
-        public void UpdateDrink(Drink drink)
+        
+        public void UpdateDrink(Drink drink) //updates a drink using the method from dao class
         {
             drinkdb.UpdateDrink(drink);
         }
-        //removes a drink using the method from dao class
-        public void RemoveDrink(Drink drink)
+        
+        public void RemoveDrink(Drink drink) //removes a drink using the method from dao class
         {
             drinkdb.RemoveDrink(drink);
         }
