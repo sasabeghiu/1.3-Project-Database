@@ -185,12 +185,13 @@ namespace SomerenUI
                     listviewDrinks.Columns.Add("Drink Name");
                     listviewDrinks.Columns.Add("Drink Price");
                     listviewDrinks.Columns.Add("Drink Stock");
+                    listviewDrinks.Columns.Add(""); //column for showing Stock nearly deleted or Stock Sufficient
 
                     listviewDrinks.FullRowSelect = true; //Select the item and subitems when selection is made. 
 
                     foreach (Drink d in drinkList)
                     {
-                        ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
+                        ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
                         listviewDrinks.Items.Add(li4);
                         li4.Tag = d;
                     }
@@ -266,24 +267,23 @@ namespace SomerenUI
 
         private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //make the button available if an item was selected
+            //make the button deletedrink available only if an item was selected
             btnDeleteDrink.Enabled = listviewDrinks.SelectedItems.Count >= 0;
-            
-            if (listviewDrinks.SelectedItems.Count >= 0)
-            {
-                Drink drink = (Drink)listviewDrinks.Items[0].Tag; // change?
 
-                txtIddrink.Text = drink.Id.ToString();
-                txtDrinkName.Text = drink.Name;
+            if (listviewDrinks.SelectedItems.Count == 1) //if 1 item is selected
+            {
+                Drink drink = (Drink)listviewDrinks.SelectedItems[0].Tag;  //return the item as an object
+
+                txtDrinkName.Text = drink.Name;                //fill the textboxes with the object name, stock and price
                 txtDrinkStock.Text = drink.Stock.ToString();
                 txtDrinkPrice.Text = drink.Price.ToString();
             }
         }
 
-        private void btnDeleteDrink_Click(object sender, EventArgs e)
+        private void btnDeleteDrink_Click(object sender, EventArgs e) //remove a drink
         {
             lblError.Visible = false; //hide the error label
-            if (listviewDrinks.SelectedItems.Count >= 0)
+            if (listviewDrinks.SelectedItems.Count == 1)
             {
                 Drink drink = (Drink)listviewDrinks.Items[0].Tag;
                 try
@@ -295,15 +295,24 @@ namespace SomerenUI
                     lblError.Visible = true;
                     lblError.Text = "Error occured: " + exp.Message;
                 }
+                //refreshing the list with drinks 
+                listviewDrinks.Items.Clear();
+                List<Drink> drinkList = drinkService.GetDrinks(); //just drinkService.GetDrinks(); wasnt working so i clearead the items and added again
+                foreach (Drink d in drinkList)
+                {
+                    ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
+                    listviewDrinks.Items.Add(li4);
+                    li4.Tag = d;
+                }
             }
         }
 
-        private void btnModifyDrink_Click(object sender, EventArgs e)
+        private void btnModifyDrink_Click(object sender, EventArgs e) //modify/update a drink
         {
             if (listviewDrinks.SelectedItems.Count < 0)
                 return;
             Drink drink = (Drink)listviewDrinks.Items[0].Tag;
-            drink.Id = int.Parse(txtIddrink.Text);
+
             drink.Name = txtDrinkName.Text.ToString();
             drink.Stock = int.Parse(txtDrinkStock.Text);
             drink.Price = int.Parse(txtDrinkPrice.Text);
@@ -316,34 +325,39 @@ namespace SomerenUI
                 lblError.Visible = true;
                 lblError.Text = "Error occured: " + exp.Message;
             }
+            //refreshing the list with drinks 
+            listviewDrinks.Items.Clear();
+            List<Drink> drinkList = drinkService.GetDrinks(); //just drinkService.GetDrinks(); wasnt working so i clearead the items and added again
+            foreach (Drink d in drinkList)
+            {
+                ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
+                listviewDrinks.Items.Add(li4);
+                li4.Tag = d;
+            }
         }
-        private void btnAddDrink_Click(object sender, EventArgs e)
+
+        private void btnAddDrink_Click(object sender, EventArgs e) //button Add Drink
         {
             Drink drink = new Drink();
 
-            drink.Id = int.Parse(txtIddrink.Text);
             drink.Name = txtDrinkName.Text.ToString();
             drink.Stock = int.Parse(txtDrinkStock.Text);
             drink.Price = int.Parse(txtDrinkPrice.Text);
             try
             {
-                drinkService.AddDrink(drink);
+                drinkService.AddDrink(drink);   
             }
-            catch (Exception exp)
+            catch (Exception exp) //if theres any error show in the label
             {
                 lblError.Visible = true;
                 lblError.Text = "Error occured: " + exp.Message;
             }
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
             //refreshing the list with drinks 
             listviewDrinks.Items.Clear();
-            List<Drink> drinkList = drinkService.GetDrinks();
+            List<Drink> drinkList = drinkService.GetDrinks(); //just drinkService.GetDrinks(); wasnt working so i clearead the items and added again
             foreach (Drink d in drinkList)
             {
-                ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
+                ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
                 listviewDrinks.Items.Add(li4);
                 li4.Tag = d;
             }

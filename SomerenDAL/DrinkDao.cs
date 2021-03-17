@@ -15,7 +15,7 @@ namespace SomerenDAL
     {
         private SqlConnection dbConnection;
         //returns a list of drinks from database
-        public List<Drink> GetAllDrinks()                                       //finish the query(pdf) and ask Mark
+        public List<Drink> GetAllDrinks()                                       
         {
             string query = "SELECT DrinkId, Name, Stock, Price " +              // Select all drinks 
                            "FROM [Drink] " +
@@ -52,16 +52,18 @@ namespace SomerenDAL
             try
             {
                 OpenConnection();
-                /*SqlCommand command = new SqlCommand("INSERT INTO Drink (Id, Name, Stock, Price) VALUES (@Id, @Name, @Stock, @Price); " +
-                    "SELECT SCOPE_IDENTITY();", dbConnection);
-                command.Parameters.AddWithValue("@Id", drink.Id);
+                /*SqlCommand command = new SqlCommand(
+                    "INSERT INTO Drink (Name, Stock, Price) " +
+                                "VALUES (@Name, @Stock, @Price); " +
+                                "SELECT SCOPE_IDENTITY();",
+                    dbConnection);
                 command.Parameters.AddWithValue("@Stock", drink.Stock);
                 command.Parameters.AddWithValue("@Name", drink.Name);
                 command.Parameters.AddWithValue("@Price", drink.Price);
-                //drink.Id = Convert.ToInt32(command.ExecuteScalar());*/
+                drink.Id = Convert.ToInt32(command.ExecuteScalar());*/ //that was the way Gerwin showed us but it didnt work
 
-                string query = "INSERT INTO Drink" +
-                               "VALUES(DrinkId" + drink.Id + ", Name" + drink.Name + ", Stock" + drink.Stock + ", Price" + drink.Price + ")";
+                string query = "INSERT INTO Drink (Name, Stock, Price)" +
+                               "VALUES('"+drink.Name+"','"+drink.Stock+"','"+drink.Price+"') ;";
                 SqlParameter[] sqlParameters = new SqlParameter[0];
                 ExecuteEditQuery(query, sqlParameters);
             }
@@ -84,7 +86,7 @@ namespace SomerenDAL
                 command.Parameters.AddWithValue("@Stock", drink.Stock);
                 command.Parameters.AddWithValue("@Name", drink.Name);
                 command.Parameters.AddWithValue("@Price", drink.Price);
-                command.Parameters.AddWithValue("@DrinkId", drink.Id);*/
+                command.Parameters.AddWithValue("@DrinkId", drink.Id);*/ //that was the way Gerwin showed us but it didnt work
 
                 string query = "UPDATE Drink SET Name='" + drink.Name + "', Price=" + drink.Price + ", Stock=" + drink.Stock + " WHERE [DrinkId]=" + drink.Id;
                 SqlParameter[] sqlParameters = new SqlParameter[0];
@@ -106,7 +108,7 @@ namespace SomerenDAL
             {
                 OpenConnection();
                 //SqlCommand command = new SqlCommand("DELETE FROM Drink WHERE DrinkId = @DrinkId", dbConnection);
-                //command.Parameters.AddWithValue("@DrinkId", drink.Id);
+                //command.Parameters.AddWithValue("@DrinkId", drink.Id); //that was the way Gerwin showed us but it didnt work
 
                 string query = "DELETE FROM Drink WHERE [DrinkId]=" + drink.Id;
                 SqlParameter[] sqlParameters = new SqlParameter[0];
