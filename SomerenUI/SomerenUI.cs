@@ -15,13 +15,15 @@ namespace SomerenUI
     public partial class SomerenUI : Form
     {
         DrinkService drinkService;
+        StudentService studentService;
         public SomerenUI()
         {
             InitializeComponent();
             drinkService = new DrinkService();
+            studentService = new StudentService();
             //make the delete button unable to use untill an item is selected and hide the label until there is an error
             btnDeleteDrink.Enabled = false;
-            lblError.Visible = false;
+            lbl_Error.Visible = false;
         }
 
         private void SomerenUI_Load(object sender, EventArgs e)
@@ -38,6 +40,7 @@ namespace SomerenUI
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
+                pnlCashRegister.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -51,6 +54,7 @@ namespace SomerenUI
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
+                pnlCashRegister.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -92,6 +96,7 @@ namespace SomerenUI
                 pnlStudents.Hide();
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
+                pnlCashRegister.Hide();
 
                 // show teachers
                 pnlTeachers.Show();
@@ -131,6 +136,7 @@ namespace SomerenUI
                 pnlStudents.Hide();
                 pnlTeachers.Hide();
                 pnlDrinks.Hide();
+                pnlCashRegister.Hide();
 
                 // show rooms
                 pnlRooms.Show();
@@ -169,6 +175,7 @@ namespace SomerenUI
                 pnlStudents.Hide();
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
+                pnlCashRegister.Hide();
 
                 // show drinks
                 pnlDrinks.Show();
@@ -203,7 +210,73 @@ namespace SomerenUI
                     MessageBox.Show("Something went wrong while loading the drinks: " + e.Message);
                 }
             }
+            else if (panelName == "Cash register")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+                pnlDrinks.Hide();
+
+                // show drinks
+                pnlCashRegister.Show();
+
+                try
+                {
+                    // fill the students listview within the students panel with a list of students
+                    StudentService studService = new StudentService();
+                    List<Student> studentList = studService.GetStudents();
+
+                    // clear the listview before filling it again
+                    listViewCashRegisterStudents.Clear();
+                    //set the view to show details
+                    listViewCashRegisterStudents.View = View.Details;
+                    //creating columnss for items
+                    listViewCashRegisterStudents.Columns.Add("Student ID");
+                    listViewCashRegisterStudents.Columns.Add("First Name");
+                    listViewCashRegisterStudents.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Student s in studentList)
+                    {
+                        ListViewItem li5 = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName });//creating the items we need
+                        li5.Tag = s;
+                        listViewCashRegisterStudents.Items.Add(li5);
+                    }
+                    listViewCashRegisterStudents.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewCashRegisterStudents.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Auto resize headers to fit
+
+                    // fill the drinks listview within the drinks panel with a list of drinks
+                    List<Drink> drinkList = drinkService.GetDrinks();
+
+                    // clear the listview before filling it again
+                    listViewCashRegisterDrinks.Clear();
+                    listViewCashRegisterDrinks.View = View.Details; // Enable rows
+                    listViewCashRegisterDrinks.Columns.Add("Drink ID"); // Add colums
+                    listViewCashRegisterDrinks.Columns.Add("Drink Name");
+                    listViewCashRegisterDrinks.Columns.Add("Drink Price");
+                    listViewCashRegisterDrinks.Columns.Add("Drink Stock");
+
+                    listViewCashRegisterDrinks.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Drink d in drinkList)
+                    {
+                        ListViewItem li6 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString() });
+                        listViewCashRegisterDrinks.Items.Add(li6);
+                        li6.Tag = d;
+                    }
+                    listViewCashRegisterDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewCashRegisterDrinks.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the cash register: " + e.Message);
+                }
+            }
         }
+
 
         private void dashboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -282,7 +355,7 @@ namespace SomerenUI
 
         private void btnDeleteDrink_Click(object sender, EventArgs e) //remove a drink
         {
-            lblError.Visible = false; //hide the error label
+            lbl_Error.Visible = false; //hide the error label
             if (listviewDrinks.SelectedItems.Count == 1)
             {
                 Drink drink = (Drink)listviewDrinks.SelectedItems[0].Tag;
@@ -292,8 +365,8 @@ namespace SomerenUI
                 }
                 catch (Exception exp) //if theres any error show in the label
                 {
-                    lblError.Visible = true;
-                    lblError.Text = "Error occured: " + exp.Message;
+                    lbl_Error.Visible = true;
+                    lbl_Error.Text = "Error occured: " + exp.Message;
                 }
                 //refreshing the list with drinks 
                 listviewDrinks.Items.Clear();
@@ -324,8 +397,8 @@ namespace SomerenUI
                 }
                 catch (Exception exp) //if theres any error show in the label
                 {
-                    lblError.Visible = true;
-                    lblError.Text = "Error occured: " + exp.Message;
+                    lbl_Error.Visible = true;
+                    lbl_Error.Text = "Error occured: " + exp.Message;
                 }
             }
             //refreshing the list with drinks 
@@ -342,18 +415,18 @@ namespace SomerenUI
         private void btnAddDrink_Click(object sender, EventArgs e) //button Add Drink
         {
             Drink drink = new Drink(); //create a new object
-             
+
             drink.Name = txtDrinkName.Text.ToString();  //assign objects parameters from text boxes
             drink.Stock = int.Parse(txtDrinkStock.Text);
             drink.Price = int.Parse(txtDrinkPrice.Text);
             try
             {
-                drinkService.AddDrink(drink);   
+                drinkService.AddDrink(drink);
             }
             catch (Exception exp) //if theres any error show in the label
             {
-                lblError.Visible = true;
-                lblError.Text = "Error occured: " + exp.Message;
+                lbl_Error.Visible = true;
+                lbl_Error.Text = "Error occured: " + exp.Message;
             }
             //refreshing the list with drinks 
             listviewDrinks.Items.Clear();
@@ -363,6 +436,45 @@ namespace SomerenUI
                 ListViewItem li4 = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
                 listviewDrinks.Items.Add(li4);
                 li4.Tag = d;
+            }
+        }
+
+        private void cashRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Cash register");
+        }
+
+        private void btnCheckout_Click(object sender, EventArgs e)
+        {
+            CashRegisterService service = new CashRegisterService();
+
+            ListViewItem item = listViewCashRegisterDrinks.SelectedItems[0];
+            Drink drink = (Drink)item.Tag;
+
+            ListViewItem item2 = listViewCashRegisterStudents.SelectedItems[0];
+            Student student = (Student)item2.Tag;
+
+            service.AddStudentDrink(student, drink);
+
+            MessageBox.Show($"{student.FirstName} got {drink.Name} for {drink.Price} tokens. \nThe sales line was written to database.", "Checkout Info", MessageBoxButtons.OK);
+
+            //refreshing the list with students 
+            listViewCashRegisterStudents.Items.Clear();
+            List<Student> studList = studentService.GetStudents(); //just drinkService.GetDrinks(); wasnt working so i clearead the items and added again
+            foreach (Student s in studList)
+            {
+                ListViewItem li = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName });
+                listViewCashRegisterStudents.Items.Add(li);
+                li.Tag = s;
+            }
+            //refreshing the list with drinks 
+            listViewCashRegisterDrinks.Items.Clear();
+            List<Drink> drinkList = drinkService.GetDrinks(); //just drinkService.GetDrinks(); wasnt working so i clearead the items and added again
+            foreach (Drink d in drinkList)
+            {
+                ListViewItem li = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
+                listViewCashRegisterDrinks.Items.Add(li);
+                li.Tag = d;
             }
         }
     }

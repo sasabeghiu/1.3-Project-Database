@@ -40,6 +40,7 @@
             this.activitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.roomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drinkSuppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cashRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDashboard = new System.Windows.Forms.Panel();
             this.lbl_Dashboard = new System.Windows.Forms.Label();
             this.pnlStudents = new System.Windows.Forms.Panel();
@@ -71,7 +72,7 @@
             this.txtDrinkName = new System.Windows.Forms.TextBox();
             this.txtDrinkStock = new System.Windows.Forms.TextBox();
             this.txtDrinkPrice = new System.Windows.Forms.TextBox();
-            this.lblError = new System.Windows.Forms.Label();
+            this.lbl_Error = new System.Windows.Forms.Label();
             this.btnAddDrink = new System.Windows.Forms.Button();
             this.btnModifyDrink = new System.Windows.Forms.Button();
             this.btnDeleteDrink = new System.Windows.Forms.Button();
@@ -79,6 +80,12 @@
             this.lbl_Drinks = new System.Windows.Forms.Label();
             this.listviewDrinks = new System.Windows.Forms.ListView();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.pnlCashRegister = new System.Windows.Forms.Panel();
+            this.btnCheckout = new System.Windows.Forms.Button();
+            this.listViewCashRegisterDrinks = new System.Windows.Forms.ListView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lbl_CashRegister = new System.Windows.Forms.Label();
+            this.listViewCashRegisterStudents = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.imgDashboard)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
@@ -90,6 +97,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgRooms)).BeginInit();
             this.pnlDrinks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgDrinks)).BeginInit();
+            this.pnlCashRegister.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // imgDashboard
@@ -109,7 +118,8 @@
             this.lecturersToolStripMenuItem,
             this.activitiesToolStripMenuItem,
             this.roomsToolStripMenuItem,
-            this.drinkSuppliesToolStripMenuItem});
+            this.drinkSuppliesToolStripMenuItem,
+            this.cashRegisterToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(962, 24);
@@ -179,6 +189,13 @@
             this.drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
             this.drinkSuppliesToolStripMenuItem.Text = "Drinks Supplies";
             this.drinkSuppliesToolStripMenuItem.Click += new System.EventHandler(this.drinkSuppliesToolStripMenuItem_Click);
+            // 
+            // cashRegisterToolStripMenuItem
+            // 
+            this.cashRegisterToolStripMenuItem.Name = "cashRegisterToolStripMenuItem";
+            this.cashRegisterToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.cashRegisterToolStripMenuItem.Text = "Cash Register";
+            this.cashRegisterToolStripMenuItem.Click += new System.EventHandler(this.cashRegisterToolStripMenuItem_Click);
             // 
             // pnlDashboard
             // 
@@ -383,7 +400,7 @@
             this.pnlDrinks.Controls.Add(this.txtDrinkName);
             this.pnlDrinks.Controls.Add(this.txtDrinkStock);
             this.pnlDrinks.Controls.Add(this.txtDrinkPrice);
-            this.pnlDrinks.Controls.Add(this.lblError);
+            this.pnlDrinks.Controls.Add(this.lbl_Error);
             this.pnlDrinks.Controls.Add(this.btnAddDrink);
             this.pnlDrinks.Controls.Add(this.btnModifyDrink);
             this.pnlDrinks.Controls.Add(this.btnDeleteDrink);
@@ -443,15 +460,15 @@
             this.txtDrinkPrice.Size = new System.Drawing.Size(179, 20);
             this.txtDrinkPrice.TabIndex = 13;
             // 
-            // lblError
+            // lbl_Error
             // 
-            this.lblError.AutoSize = true;
-            this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(15, 366);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(16, 13);
-            this.lblError.TabIndex = 12;
-            this.lblError.Text = "...";
+            this.lbl_Error.AutoSize = true;
+            this.lbl_Error.ForeColor = System.Drawing.Color.Red;
+            this.lbl_Error.Location = new System.Drawing.Point(15, 366);
+            this.lbl_Error.Name = "lbl_Error";
+            this.lbl_Error.Size = new System.Drawing.Size(16, 13);
+            this.lbl_Error.TabIndex = 12;
+            this.lbl_Error.Text = "...";
             // 
             // btnAddDrink
             // 
@@ -515,11 +532,77 @@
             this.listviewDrinks.UseCompatibleStateImageBehavior = false;
             this.listviewDrinks.SelectedIndexChanged += new System.EventHandler(this.listviewDrinks_SelectedIndexChanged);
             // 
+            // pnlCashRegister
+            // 
+            this.pnlCashRegister.Controls.Add(this.btnCheckout);
+            this.pnlCashRegister.Controls.Add(this.listViewCashRegisterDrinks);
+            this.pnlCashRegister.Controls.Add(this.pictureBox1);
+            this.pnlCashRegister.Controls.Add(this.lbl_CashRegister);
+            this.pnlCashRegister.Controls.Add(this.listViewCashRegisterStudents);
+            this.pnlCashRegister.Location = new System.Drawing.Point(12, 27);
+            this.pnlCashRegister.Name = "pnlCashRegister";
+            this.pnlCashRegister.Size = new System.Drawing.Size(935, 463);
+            this.pnlCashRegister.TabIndex = 19;
+            // 
+            // btnCheckout
+            // 
+            this.btnCheckout.Location = new System.Drawing.Point(672, 366);
+            this.btnCheckout.Name = "btnCheckout";
+            this.btnCheckout.Size = new System.Drawing.Size(115, 34);
+            this.btnCheckout.TabIndex = 10;
+            this.btnCheckout.Text = "Check Out";
+            this.btnCheckout.UseVisualStyleBackColor = true;
+            this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
+            // 
+            // listViewCashRegisterDrinks
+            // 
+            this.listViewCashRegisterDrinks.GridLines = true;
+            this.listViewCashRegisterDrinks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewCashRegisterDrinks.HideSelection = false;
+            this.listViewCashRegisterDrinks.Location = new System.Drawing.Point(413, 42);
+            this.listViewCashRegisterDrinks.Name = "listViewCashRegisterDrinks";
+            this.listViewCashRegisterDrinks.Size = new System.Drawing.Size(374, 303);
+            this.listViewCashRegisterDrinks.TabIndex = 9;
+            this.listViewCashRegisterDrinks.UseCompatibleStateImageBehavior = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SomerenUI.Properties.Resources.someren;
+            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
+            this.pictureBox1.Location = new System.Drawing.Point(805, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(130, 123);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lbl_CashRegister
+            // 
+            this.lbl_CashRegister.AutoSize = true;
+            this.lbl_CashRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_CashRegister.Location = new System.Drawing.Point(10, 10);
+            this.lbl_CashRegister.Name = "lbl_CashRegister";
+            this.lbl_CashRegister.Size = new System.Drawing.Size(165, 29);
+            this.lbl_CashRegister.TabIndex = 7;
+            this.lbl_CashRegister.Text = "Cash Register";
+            // 
+            // listViewCashRegisterStudents
+            // 
+            this.listViewCashRegisterStudents.GridLines = true;
+            this.listViewCashRegisterStudents.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewCashRegisterStudents.HideSelection = false;
+            this.listViewCashRegisterStudents.Location = new System.Drawing.Point(18, 42);
+            this.listViewCashRegisterStudents.MultiSelect = false;
+            this.listViewCashRegisterStudents.Name = "listViewCashRegisterStudents";
+            this.listViewCashRegisterStudents.Size = new System.Drawing.Size(374, 303);
+            this.listViewCashRegisterStudents.TabIndex = 6;
+            this.listViewCashRegisterStudents.UseCompatibleStateImageBehavior = false;
+            // 
             // SomerenUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 505);
+            this.Controls.Add(this.pnlCashRegister);
             this.Controls.Add(this.pnlDrinks);
             this.Controls.Add(this.pnlRooms);
             this.Controls.Add(this.pnlTeachers);
@@ -549,6 +632,9 @@
             this.pnlDrinks.ResumeLayout(false);
             this.pnlDrinks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgDrinks)).EndInit();
+            this.pnlCashRegister.ResumeLayout(false);
+            this.pnlCashRegister.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -599,13 +685,20 @@
         private System.Windows.Forms.Button btnAddDrink;
         private System.Windows.Forms.Button btnModifyDrink;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.Label lbl_Error;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtDrinkName;
         private System.Windows.Forms.TextBox txtDrinkStock;
         private System.Windows.Forms.TextBox txtDrinkPrice;
+        private System.Windows.Forms.ToolStripMenuItem cashRegisterToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlCashRegister;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lbl_CashRegister;
+        private System.Windows.Forms.ListView listViewCashRegisterStudents;
+        private System.Windows.Forms.ListView listViewCashRegisterDrinks;
+        private System.Windows.Forms.Button btnCheckout;
     }
 }
 
