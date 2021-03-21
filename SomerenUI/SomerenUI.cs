@@ -16,11 +16,13 @@ namespace SomerenUI
     {
         DrinkService drinkService;
         StudentService studentService;
+        ReportService reportService;
         public SomerenUI()
         {
             InitializeComponent();
             drinkService = new DrinkService();
             studentService = new StudentService();
+            reportService = new ReportService();
             //make the delete button unable to use untill an item is selected and hide the label until there is an error
             btnDeleteDrink.Enabled = false;
             lbl_Error.Visible = false;
@@ -41,6 +43,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
+                pnlReport.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -55,6 +58,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
+                pnlReport.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -97,6 +101,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
+                pnlReport.Hide();
 
                 // show teachers
                 pnlTeachers.Show();
@@ -137,6 +142,7 @@ namespace SomerenUI
                 pnlTeachers.Hide();
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
+                pnlReport.Hide();
 
                 // show rooms
                 pnlRooms.Show();
@@ -176,6 +182,7 @@ namespace SomerenUI
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
                 pnlCashRegister.Hide();
+                pnlReport.Hide();
 
                 // show drinks
                 pnlDrinks.Show();
@@ -219,8 +226,9 @@ namespace SomerenUI
                 pnlTeachers.Hide();
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
+                pnlReport.Hide();
 
-                // show drinks
+                // show cash register
                 pnlCashRegister.Show();
 
                 try
@@ -275,12 +283,41 @@ namespace SomerenUI
                     MessageBox.Show("Something went wrong while loading the cash register: " + e.Message);
                 }
             }
-        }
+            else if (panelName == "Revenue Report")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+                pnlDrinks.Hide();
+                pnlCashRegister.Hide();
 
+                //show revenue report
+                pnlReport.Show();
 
-        private void dashboardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+                try
+                {
+                    List<Report> reportList = reportService.GetAllReports();
 
+                    // clear the listview before filling it again
+                    listViewReport.Clear();
+                    listViewReport.View = View.Details; // Enable rows
+                    listViewReport.Columns.Add("Sales"); // Add colums
+                    listViewReport.Columns.Add("Turnover", 80);
+                    listViewReport.Columns.Add("Nr. of customers");
+
+                    listViewReport.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    listViewReport.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewReport.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize); // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the revenue report: " + e.Message);
+                }
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -293,11 +330,6 @@ namespace SomerenUI
             showPanel("Dashboard");
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void imgDashboard_Click(object sender, EventArgs e)
         {
             MessageBox.Show("What happens in Someren, stays in Someren!");
@@ -306,16 +338,6 @@ namespace SomerenUI
         private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showPanel("Students");
-        }
-
-        private void listViewStudents_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listViewTeachers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void lecturersToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -328,17 +350,20 @@ namespace SomerenUI
             showPanel("Rooms");
         }
 
-        private void listviewRooms_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showPanel("Drinks Supplies");
         }
-
-        private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e) //actions for listview drinks
+        private void cashRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Cash register");
+        }
+        private void revenueReportToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            showPanel("Revenue Report");
+        }
+        //actions for listview drinks
+        private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
             //make the button deletedrink available only if an item was selected
             btnDeleteDrink.Enabled = listviewDrinks.SelectedItems.Count >= 0;
@@ -352,8 +377,8 @@ namespace SomerenUI
                 txtDrinkPrice.Text = drink.Price.ToString();
             }
         }
-
-        private void btnDeleteDrink_Click(object sender, EventArgs e) //remove a drink
+        //remove a drink
+        private void btnDeleteDrink_Click(object sender, EventArgs e)
         {
             lbl_Error.Visible = false; //hide the error label
             if (listviewDrinks.SelectedItems.Count == 1)
@@ -379,8 +404,8 @@ namespace SomerenUI
                 }
             }
         }
-
-        private void btnModifyDrink_Click(object sender, EventArgs e) //modify/update a drink
+        //modify/update a drink
+        private void btnModifyDrink_Click(object sender, EventArgs e)
         {
             if (listviewDrinks.SelectedItems.Count < 0)
                 return;
@@ -411,8 +436,8 @@ namespace SomerenUI
                 li4.Tag = d;
             }
         }
-
-        private void btnAddDrink_Click(object sender, EventArgs e) //button Add Drink
+        //button Add Drink
+        private void btnAddDrink_Click(object sender, EventArgs e)
         {
             Drink drink = new Drink(); //create a new object
 
@@ -438,12 +463,7 @@ namespace SomerenUI
                 li4.Tag = d;
             }
         }
-
-        private void cashRegisterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showPanel("Cash register");
-        }
-
+        //btn checkout
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             CashRegisterService service = new CashRegisterService();
@@ -475,6 +495,18 @@ namespace SomerenUI
                 ListViewItem li = new ListViewItem(new String[] { d.Id.ToString(), d.Name, d.Price.ToString(), d.Stock.ToString(), d.StockInfo.ToString() });
                 listViewCashRegisterDrinks.Items.Add(li);
                 li.Tag = d;
+            }
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            listViewReport.Items.Clear();
+            List<Report> reportList = reportService.GetAllReports();
+            foreach (Report r in reportList)
+            {
+                int total = r.Sales * r.Turnover;
+                ListViewItem li = new ListViewItem(new String[] { r.Sales.ToString() + " drinks sold", total.ToString() + " tokens", r.Customers.ToString() });
+                listViewReport.Items.Add(li);
             }
         }
     }
