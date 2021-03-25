@@ -88,12 +88,27 @@
             this.lbl_CashRegister = new System.Windows.Forms.Label();
             this.listViewCashRegisterStudents = new System.Windows.Forms.ListView();
             this.pnlReport = new System.Windows.Forms.Panel();
+            this.btnReport = new System.Windows.Forms.Button();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.lbl_Report = new System.Windows.Forms.Label();
             this.img_Report = new System.Windows.Forms.PictureBox();
             this.listViewReport = new System.Windows.Forms.ListView();
             this.revenueReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.btnReport = new System.Windows.Forms.Button();
+            this.pnlActivity = new System.Windows.Forms.Panel();
+            this.monthStart = new System.Windows.Forms.DateTimePicker();
+            this.monthEnd = new System.Windows.Forms.DateTimePicker();
+            this.lblEndTime = new System.Windows.Forms.Label();
+            this.lblStartTime = new System.Windows.Forms.Label();
+            this.lblDescriptiom = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
+            this.lblCaution = new System.Windows.Forms.Label();
+            this.btnAddActivity = new System.Windows.Forms.Button();
+            this.btnModifyActivity = new System.Windows.Forms.Button();
+            this.btnRemoveActivity = new System.Windows.Forms.Button();
+            this.img_Activity = new System.Windows.Forms.PictureBox();
+            this.lblActivity = new System.Windows.Forms.Label();
+            this.listViewActivity = new System.Windows.Forms.ListView();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imgDashboard)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
@@ -109,6 +124,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.img_Cash)).BeginInit();
             this.pnlReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_Report)).BeginInit();
+            this.pnlActivity.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Activity)).BeginInit();
             this.SuspendLayout();
             // 
             // imgDashboard
@@ -185,6 +202,7 @@
             this.activitiesToolStripMenuItem.Name = "activitiesToolStripMenuItem";
             this.activitiesToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.activitiesToolStripMenuItem.Text = "Activities";
+            this.activitiesToolStripMenuItem.Click += new System.EventHandler(this.activitiesToolStripMenuItem_Click);
             // 
             // roomsToolStripMenuItem
             // 
@@ -612,6 +630,7 @@
             // 
             // pnlReport
             // 
+            this.pnlReport.Controls.Add(this.label1);
             this.pnlReport.Controls.Add(this.btnReport);
             this.pnlReport.Controls.Add(this.monthCalendar1);
             this.pnlReport.Controls.Add(this.lbl_Report);
@@ -621,6 +640,22 @@
             this.pnlReport.Name = "pnlReport";
             this.pnlReport.Size = new System.Drawing.Size(935, 463);
             this.pnlReport.TabIndex = 20;
+            // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(715, 322);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(75, 23);
+            this.btnReport.TabIndex = 11;
+            this.btnReport.Text = "Calculate";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(563, 42);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 10;
             // 
             // lbl_Report
             // 
@@ -660,27 +695,173 @@
             this.revenueReportToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.revenueReportToolStripMenuItem.Text = "Revenue Report";
             // 
-            // monthCalendar1
+            // pnlActivity
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(563, 42);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 10;
+            this.pnlActivity.Controls.Add(this.monthStart);
+            this.pnlActivity.Controls.Add(this.monthEnd);
+            this.pnlActivity.Controls.Add(this.lblEndTime);
+            this.pnlActivity.Controls.Add(this.lblStartTime);
+            this.pnlActivity.Controls.Add(this.lblDescriptiom);
+            this.pnlActivity.Controls.Add(this.txtDescription);
+            this.pnlActivity.Controls.Add(this.lblCaution);
+            this.pnlActivity.Controls.Add(this.btnAddActivity);
+            this.pnlActivity.Controls.Add(this.btnModifyActivity);
+            this.pnlActivity.Controls.Add(this.btnRemoveActivity);
+            this.pnlActivity.Controls.Add(this.img_Activity);
+            this.pnlActivity.Controls.Add(this.lblActivity);
+            this.pnlActivity.Controls.Add(this.listViewActivity);
+            this.pnlActivity.Location = new System.Drawing.Point(9, 27);
+            this.pnlActivity.Name = "pnlActivity";
+            this.pnlActivity.Size = new System.Drawing.Size(935, 463);
+            this.pnlActivity.TabIndex = 21;
             // 
-            // btnReport
+            // monthStart
             // 
-            this.btnReport.Location = new System.Drawing.Point(715, 322);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(75, 23);
-            this.btnReport.TabIndex = 11;
-            this.btnReport.Text = "Calculate";
-            this.btnReport.UseVisualStyleBackColor = true;
-            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            this.monthStart.CustomFormat = "dd-MM-yyyy HH:mm:ss";
+            this.monthStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.monthStart.Location = new System.Drawing.Point(627, 151);
+            this.monthStart.MaxDate = new System.DateTime(2021, 12, 1, 0, 0, 0, 0);
+            this.monthStart.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.monthStart.Name = "monthStart";
+            this.monthStart.Size = new System.Drawing.Size(145, 20);
+            this.monthStart.TabIndex = 22;
+            // 
+            // monthEnd
+            // 
+            this.monthEnd.CustomFormat = "dd-MM-yyyy HH:mm:ss";
+            this.monthEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.monthEnd.Location = new System.Drawing.Point(627, 184);
+            this.monthEnd.MaxDate = new System.DateTime(2021, 12, 1, 0, 0, 0, 0);
+            this.monthEnd.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.monthEnd.Name = "monthEnd";
+            this.monthEnd.Size = new System.Drawing.Size(145, 20);
+            this.monthEnd.TabIndex = 21;
+            // 
+            // lblEndTime
+            // 
+            this.lblEndTime.AutoSize = true;
+            this.lblEndTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEndTime.Location = new System.Drawing.Point(508, 188);
+            this.lblEndTime.Name = "lblEndTime";
+            this.lblEndTime.Size = new System.Drawing.Size(60, 15);
+            this.lblEndTime.TabIndex = 18;
+            this.lblEndTime.Text = "End Time";
+            // 
+            // lblStartTime
+            // 
+            this.lblStartTime.AutoSize = true;
+            this.lblStartTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStartTime.Location = new System.Drawing.Point(508, 154);
+            this.lblStartTime.Name = "lblStartTime";
+            this.lblStartTime.Size = new System.Drawing.Size(63, 15);
+            this.lblStartTime.TabIndex = 17;
+            this.lblStartTime.Text = "Start Time";
+            // 
+            // lblDescriptiom
+            // 
+            this.lblDescriptiom.AutoSize = true;
+            this.lblDescriptiom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescriptiom.Location = new System.Drawing.Point(508, 121);
+            this.lblDescriptiom.Name = "lblDescriptiom";
+            this.lblDescriptiom.Size = new System.Drawing.Size(107, 15);
+            this.lblDescriptiom.TabIndex = 16;
+            this.lblDescriptiom.Text = "Activity Description";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(627, 116);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(145, 20);
+            this.txtDescription.TabIndex = 15;
+            // 
+            // lblCaution
+            // 
+            this.lblCaution.AutoSize = true;
+            this.lblCaution.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCaution.ForeColor = System.Drawing.Color.Red;
+            this.lblCaution.Location = new System.Drawing.Point(18, 409);
+            this.lblCaution.Name = "lblCaution";
+            this.lblCaution.Size = new System.Drawing.Size(20, 17);
+            this.lblCaution.TabIndex = 12;
+            this.lblCaution.Text = "...";
+            // 
+            // btnAddActivity
+            // 
+            this.btnAddActivity.Location = new System.Drawing.Point(18, 361);
+            this.btnAddActivity.Name = "btnAddActivity";
+            this.btnAddActivity.Size = new System.Drawing.Size(107, 23);
+            this.btnAddActivity.TabIndex = 11;
+            this.btnAddActivity.Text = "Add Activity";
+            this.btnAddActivity.UseVisualStyleBackColor = true;
+            this.btnAddActivity.Click += new System.EventHandler(this.btnAddActivity_Click);
+            // 
+            // btnModifyActivity
+            // 
+            this.btnModifyActivity.Location = new System.Drawing.Point(185, 361);
+            this.btnModifyActivity.Name = "btnModifyActivity";
+            this.btnModifyActivity.Size = new System.Drawing.Size(107, 23);
+            this.btnModifyActivity.TabIndex = 10;
+            this.btnModifyActivity.Text = "Modify Activity";
+            this.btnModifyActivity.UseVisualStyleBackColor = true;
+            this.btnModifyActivity.Click += new System.EventHandler(this.btnModifyActivity_Click);
+            // 
+            // btnRemoveActivity
+            // 
+            this.btnRemoveActivity.Location = new System.Drawing.Point(349, 361);
+            this.btnRemoveActivity.Name = "btnRemoveActivity";
+            this.btnRemoveActivity.Size = new System.Drawing.Size(107, 23);
+            this.btnRemoveActivity.TabIndex = 9;
+            this.btnRemoveActivity.Text = "Remove Activity";
+            this.btnRemoveActivity.UseVisualStyleBackColor = true;
+            this.btnRemoveActivity.Click += new System.EventHandler(this.btnRemoveActivity_Click);
+            // 
+            // img_Activity
+            // 
+            this.img_Activity.Image = global::SomerenUI.Properties.Resources.someren;
+            this.img_Activity.InitialImage = ((System.Drawing.Image)(resources.GetObject("img_Activity.InitialImage")));
+            this.img_Activity.Location = new System.Drawing.Point(805, 0);
+            this.img_Activity.Name = "img_Activity";
+            this.img_Activity.Size = new System.Drawing.Size(130, 123);
+            this.img_Activity.TabIndex = 8;
+            this.img_Activity.TabStop = false;
+            // 
+            // lblActivity
+            // 
+            this.lblActivity.AutoSize = true;
+            this.lblActivity.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActivity.Location = new System.Drawing.Point(10, 10);
+            this.lblActivity.Name = "lblActivity";
+            this.lblActivity.Size = new System.Drawing.Size(107, 29);
+            this.lblActivity.TabIndex = 7;
+            this.lblActivity.Text = "Activities";
+            // 
+            // listViewActivity
+            // 
+            this.listViewActivity.GridLines = true;
+            this.listViewActivity.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewActivity.HideSelection = false;
+            this.listViewActivity.Location = new System.Drawing.Point(18, 42);
+            this.listViewActivity.Name = "listViewActivity";
+            this.listViewActivity.Size = new System.Drawing.Size(438, 303);
+            this.listViewActivity.TabIndex = 6;
+            this.listViewActivity.UseCompatibleStateImageBehavior = false;
+            this.listViewActivity.SelectedIndexChanged += new System.EventHandler(this.listViewActivity_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(560, 222);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(212, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Select a range of dates and press calculate";
             // 
             // SomerenUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 505);
+            this.Controls.Add(this.pnlActivity);
             this.Controls.Add(this.pnlReport);
             this.Controls.Add(this.pnlCashRegister);
             this.Controls.Add(this.pnlDrinks);
@@ -718,6 +899,9 @@
             this.pnlReport.ResumeLayout(false);
             this.pnlReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_Report)).EndInit();
+            this.pnlActivity.ResumeLayout(false);
+            this.pnlActivity.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Activity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -790,6 +974,21 @@
         private System.Windows.Forms.Label lbl_Report;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.Panel pnlActivity;
+        private System.Windows.Forms.Label lblEndTime;
+        private System.Windows.Forms.Label lblStartTime;
+        private System.Windows.Forms.Label lblDescriptiom;
+        private System.Windows.Forms.TextBox txtDescription;
+        private System.Windows.Forms.Label lblCaution;
+        private System.Windows.Forms.Button btnAddActivity;
+        private System.Windows.Forms.Button btnModifyActivity;
+        private System.Windows.Forms.Button btnRemoveActivity;
+        private System.Windows.Forms.PictureBox img_Activity;
+        private System.Windows.Forms.Label lblActivity;
+        private System.Windows.Forms.ListView listViewActivity;
+        private System.Windows.Forms.DateTimePicker monthStart;
+        private System.Windows.Forms.DateTimePicker monthEnd;
+        private System.Windows.Forms.Label label1;
     }
 }
 

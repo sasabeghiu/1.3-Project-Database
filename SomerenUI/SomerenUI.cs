@@ -17,15 +17,22 @@ namespace SomerenUI
         DrinkService drinkService;
         StudentService studentService;
         ReportService reportService;
+        ActivityService activityService;
+
         public SomerenUI()
         {
             InitializeComponent();
+
             drinkService = new DrinkService();
             studentService = new StudentService();
             reportService = new ReportService();
+            activityService = new ActivityService();
+
             //make the delete button unable to use untill an item is selected and hide the label until there is an error
             btnDeleteDrink.Enabled = false;
+            btnRemoveActivity.Enabled = false;
             lbl_Error.Visible = false;
+            lblCaution.Visible = false;
         }
 
         private void SomerenUI_Load(object sender, EventArgs e)
@@ -44,6 +51,7 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -59,6 +67,7 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -102,6 +111,7 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show teachers
                 pnlTeachers.Show();
@@ -143,6 +153,7 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show rooms
                 pnlRooms.Show();
@@ -183,6 +194,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show drinks
                 pnlDrinks.Show();
@@ -227,6 +239,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
                 pnlReport.Hide();
+                pnlActivity.Hide();
 
                 // show cash register
                 pnlCashRegister.Show();
@@ -293,6 +306,7 @@ namespace SomerenUI
                 pnlRooms.Hide();
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
+                pnlActivity.Hide();
 
                 //show revenue report
                 pnlReport.Show();
@@ -316,6 +330,50 @@ namespace SomerenUI
                 catch (Exception e)
                 {
                     MessageBox.Show("Something went wrong while loading the revenue report: " + e.Message);
+                }
+            }
+            else if (panelName == "Activities")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+                pnlDrinks.Hide();
+                pnlCashRegister.Hide();
+                pnlReport.Hide();
+
+                //show revenue report
+                pnlActivity.Show();
+
+                try
+                {
+                    // fill the activities listview within the activities panel with a list of activities
+                    List<Activity> activityList = activityService.GetActivities();
+
+                    // clear the listview before filling it again
+                    listViewActivity.Clear();
+                    listViewActivity.View = View.Details; // Enable rows
+                    listViewActivity.Columns.Add("Activity ID"); // Add colums
+                    listViewActivity.Columns.Add("Description");
+                    listViewActivity.Columns.Add("Start Time");
+                    listViewActivity.Columns.Add("End Time");
+
+                    listViewActivity.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Activity a in activityList)
+                    {
+                        ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                        listViewActivity.Items.Add(li);
+                        li.Tag = a;
+                    }
+                    listViewActivity.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewActivity.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);    // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the activities: " + e.Message);
                 }
             }
         }
@@ -354,13 +412,20 @@ namespace SomerenUI
         {
             showPanel("Drinks Supplies");
         }
+
         private void cashRegisterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showPanel("Cash register");
         }
+
         private void revenueReportToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             showPanel("Revenue Report");
+        }
+
+        private void activitiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Activities");
         }
         //actions for listview drinks
         private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
@@ -497,7 +562,7 @@ namespace SomerenUI
                 li.Tag = d;
             }
         }
-
+        //btn report
         private void btnReport_Click(object sender, EventArgs e)
         {
             listViewReport.Items.Clear();
@@ -507,6 +572,129 @@ namespace SomerenUI
                 int total = r.Sales * r.Turnover;
                 ListViewItem li = new ListViewItem(new String[] { r.Sales.ToString() + " drinks sold", total.ToString() + " tokens", r.Customers.ToString() });
                 listViewReport.Items.Add(li);
+            }
+        }
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            string StartDate = monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyyy");
+            string EndDate = monthCalendar1.SelectionRange.End.ToString("dd/MM/yyyy");
+            label1.Text = StartDate + "-" + EndDate;
+        }
+
+        //Assignment 4 Variant A: Activities
+        private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //make the Remove activity button unclickable untill an activity is selected
+            btnRemoveActivity.Enabled = listViewActivity.SelectedItems.Count >= 0;
+
+            if (listViewActivity.SelectedItems.Count == 1) //if an activity is selected
+            {
+                //return the activity as an object
+                Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
+                //fill the textbox with the activity description amd the datetimepicker with the dates of activity
+                txtDescription.Text = activity.Description;
+                monthStart.Value = activity.StartTime;
+                monthEnd.Value = activity.EndTime;
+            }
+        }
+        //button for remove an activity
+        private void btnRemoveActivity_Click(object sender, EventArgs e)
+        {
+            if (listViewActivity.SelectedItems.Count == 1)
+            {
+                Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
+                try
+                {
+                    DialogResult dialogResult = MessageBox.Show($"Are you sure you wish to remove this activity ({activity.Description}) ?", "Remove Activity", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        activityService.RemoveActivity(activity);
+                    }
+                    else
+                        return;
+                }
+                catch (Exception exp) //if theres any error show in the label
+                {
+                    lblCaution.Visible = true;
+                    lblCaution.Text = "Error occured: " + exp.Message;
+                }
+                //refreshing the list with activities
+                listViewActivity.Items.Clear();
+                List<Activity> activityList = activityService.GetActivities();
+                foreach (Activity a in activityList)
+                {
+                    ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                    listViewActivity.Items.Add(li);
+                    li.Tag = a;
+                }
+            }
+        }
+        //button for modifying an activity
+        private void btnModifyActivity_Click(object sender, EventArgs e)
+        {
+            if (listViewActivity.SelectedItems.Count < 0)
+                return;
+            if (listViewActivity.SelectedItems.Count == 1)
+            {
+                Activity activity = (Activity)listViewActivity.SelectedItems[0].Tag;
+
+                activity.Description = txtDescription.Text.ToString();
+                activity.StartTime = monthStart.Value;
+                activity.EndTime = monthEnd.Value;
+
+                try
+                {
+                    activityService.ModifyActivity(activity);
+                }
+                catch (Exception exp) //if theres any error show in the label
+                {
+                    lblCaution.Visible = true;
+                    lblCaution.Text = "Error occured: " + exp.Message;
+                }
+                //refreshing the list with activities
+                listViewActivity.Items.Clear();
+                List<Activity> activityList = activityService.GetActivities();
+                foreach (Activity a in activityList)
+                {
+                    ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                    listViewActivity.Items.Add(li);
+                    li.Tag = a;
+                }
+            }
+        }
+        //button for adding a new activity
+        private void btnAddActivity_Click(object sender, EventArgs e)
+        {
+            List<Activity> activityl = activityService.GetActivities();
+            Activity activity = new Activity(); //create a new object
+            //assign objects parameters from text boxes
+            activity.Description = txtDescription.Text.ToString();
+            activity.StartTime = monthStart.Value;
+            activity.EndTime = monthEnd.Value;
+            try
+            {
+                try
+                {
+                    activityService.AddActivity(activity);
+                }
+                catch(Exception exp)
+                {
+                    MessageBox.Show("Activity already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception exp) //if theres any error show in the label
+            {
+                lblCaution.Visible = true;
+                lblCaution.Text = "Error occured: " + exp.Message;
+            }
+            //refreshing the list with activities
+            listViewActivity.Items.Clear();
+            List<Activity> activityList = activityService.GetActivities();
+            foreach (Activity a in activityList)
+            {
+                ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                listViewActivity.Items.Add(li);
+                li.Tag = a;
             }
         }
     }
