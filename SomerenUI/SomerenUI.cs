@@ -667,17 +667,22 @@ namespace SomerenUI
         {
             List<Activity> activityl = activityService.GetActivities();
             Activity activity = new Activity(); //create a new object
+            List<string> list = new List<string>(); //create a list of strings 
+            foreach(Activity a in activityl)//add activities to the string list
+            {
+                list.Add(a.Description);
+            }
             //assign objects parameters from text boxes
             activity.Description = txtDescription.Text.ToString();
             activity.StartTime = monthStart.Value;
             activity.EndTime = monthEnd.Value;
             try
             {
-                try
+                if(!list.Contains(activity.Description))//if the list dont contains the activity add it, otherwise show the message box
                 {
                     activityService.AddActivity(activity);
                 }
-                catch(Exception exp)
+                else
                 {
                     MessageBox.Show("Activity already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
