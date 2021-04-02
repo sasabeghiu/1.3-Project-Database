@@ -35,5 +35,44 @@ namespace SomerenDAL
             }
             return logins;
         }
+
+        public Login GetUser(string username, string password)
+        {
+            string query = $"SELECT Username, Password FROM [Login] WHERE Username = '{username}' AND Password = '{password}'";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            List<Login> users = ReadTables(ExecuteSelectQuery(query, sqlParameters));
+
+            if (users.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return users[0];
+            }
+        }
+
+        public Login GetUsername(string username)
+        {
+            string query = $"SELECT Username, Password FROM [Login] WHERE Username = '{username}'";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            List<Login> users = ReadTables(ExecuteSelectQuery(query, sqlParameters));
+
+            if (users.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return users[0];
+            }
+        }
+
+        public void AddNewAccount(Login user)
+        {
+            string query = $"INSERT INTO [Login] (Username, Password) Values ('{user.Username}','{user.Password}') ";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            ExecuteEditQuery(query, sqlParameters);
+        }
     }
 }

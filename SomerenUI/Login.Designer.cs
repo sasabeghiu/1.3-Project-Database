@@ -34,33 +34,34 @@ namespace SomerenUI
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
+            this.btnSignup = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(262, 142);
+            this.btnLogin.Location = new System.Drawing.Point(156, 142);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(91, 35);
             this.btnLogin.TabIndex = 0;
-            this.btnLogin.Text = "LOG IN";
+            this.btnLogin.Text = "SIGN IN";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // txtUsername
             // 
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(174, 43);
+            this.txtUsername.Location = new System.Drawing.Point(156, 43);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(179, 26);
+            this.txtUsername.Size = new System.Drawing.Size(197, 26);
             this.txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(174, 101);
+            this.txtPassword.Location = new System.Drawing.Point(156, 101);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(179, 26);
+            this.txtPassword.Size = new System.Drawing.Size(197, 26);
             this.txtPassword.TabIndex = 2;
             // 
             // lblUsername
@@ -83,11 +84,23 @@ namespace SomerenUI
             this.lblPassword.TabIndex = 5;
             this.lblPassword.Text = "Password";
             // 
+            // btnSignup
+            // 
+            this.btnSignup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignup.Location = new System.Drawing.Point(262, 142);
+            this.btnSignup.Name = "btnSignup";
+            this.btnSignup.Size = new System.Drawing.Size(91, 35);
+            this.btnSignup.TabIndex = 6;
+            this.btnSignup.Text = "SIGN UP";
+            this.btnSignup.UseVisualStyleBackColor = true;
+            this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(365, 189);
+            this.Controls.Add(this.btnSignup);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.txtPassword);
@@ -108,5 +121,6 @@ namespace SomerenUI
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Button btnSignup;
     }
 }

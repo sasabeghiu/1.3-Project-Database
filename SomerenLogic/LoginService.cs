@@ -22,5 +22,22 @@ namespace SomerenLogic
         {
             return logindb.GetLogins();
         }
+
+        public Login GetUser(string username, string password)
+        {
+            Login login = logindb.GetUser(username, password);
+            return login;
+        }
+
+        public Login GetUsername(string username)
+        {
+            Login login = logindb.GetUsername(username);
+            return login;
+        }
+
+        public void AddUser(Login user)
+        {
+            logindb.AddNewAccount(user);
+        }
     }
 }
