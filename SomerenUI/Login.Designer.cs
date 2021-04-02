@@ -39,7 +39,7 @@ namespace SomerenUI
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(272, 163);
+            this.btnLogin.Location = new System.Drawing.Point(262, 142);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(91, 35);
             this.btnLogin.TabIndex = 0;
@@ -50,7 +50,7 @@ namespace SomerenUI
             // txtUsername
             // 
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(184, 43);
+            this.txtUsername.Location = new System.Drawing.Point(174, 43);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(179, 26);
             this.txtUsername.TabIndex = 1;
@@ -58,7 +58,7 @@ namespace SomerenUI
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(184, 111);
+            this.txtPassword.Location = new System.Drawing.Point(174, 101);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(179, 26);
             this.txtPassword.TabIndex = 2;
@@ -67,7 +67,7 @@ namespace SomerenUI
             // 
             this.lblUsername.AutoSize = true;
             this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsername.Location = new System.Drawing.Point(52, 43);
+            this.lblUsername.Location = new System.Drawing.Point(25, 46);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(83, 20);
             this.lblUsername.TabIndex = 4;
@@ -77,7 +77,7 @@ namespace SomerenUI
             // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPassword.Location = new System.Drawing.Point(52, 114);
+            this.lblPassword.Location = new System.Drawing.Point(25, 104);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(78, 20);
             this.lblPassword.TabIndex = 5;
@@ -87,7 +87,7 @@ namespace SomerenUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 227);
+            this.ClientSize = new System.Drawing.Size(365, 189);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.txtPassword);

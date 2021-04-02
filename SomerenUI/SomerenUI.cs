@@ -14,10 +14,12 @@ namespace SomerenUI
 {
     public partial class SomerenUI : Form
     {
+        //all services we'll need later on
         DrinkService drinkService;
         StudentService studentService;
         ReportService reportService;
         ActivityService activityService;
+        TeacherService teacherService;
 
         public SomerenUI()
         {
@@ -27,12 +29,17 @@ namespace SomerenUI
             studentService = new StudentService();
             reportService = new ReportService();
             activityService = new ActivityService();
+            teacherService = new TeacherService();
 
             //make the delete button unable to use untill an item is selected and hide the label until there is an error
             btnDeleteDrink.Enabled = false;
             btnRemoveActivity.Enabled = false;
             lbl_Error.Visible = false;
             lblCaution.Visible = false;
+            lblErr.Visible = false;
+            lblE.Visible = false;
+            btnRemoveParticipant.Enabled = false;
+            btnRemoveSupervisor.Enabled = false;
         }
 
         private void SomerenUI_Load(object sender, EventArgs e)
@@ -52,6 +59,8 @@ namespace SomerenUI
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show dashboard
                 pnlDashboard.Show();
@@ -68,6 +77,8 @@ namespace SomerenUI
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show students
                 pnlStudents.Show();
@@ -112,6 +123,8 @@ namespace SomerenUI
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show teachers
                 pnlTeachers.Show();
@@ -154,6 +167,8 @@ namespace SomerenUI
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show rooms
                 pnlRooms.Show();
@@ -195,6 +210,8 @@ namespace SomerenUI
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show drinks
                 pnlDrinks.Show();
@@ -240,6 +257,8 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlReport.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 // show cash register
                 pnlCashRegister.Show();
@@ -307,6 +326,8 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlActivity.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
                 //show revenue report
                 pnlReport.Show();
@@ -343,8 +364,10 @@ namespace SomerenUI
                 pnlDrinks.Hide();
                 pnlCashRegister.Hide();
                 pnlReport.Hide();
+                pnlParticipants.Hide();
+                pnlSupervisors.Hide();
 
-                //show revenue report
+                //show activities
                 pnlActivity.Show();
 
                 try
@@ -374,6 +397,98 @@ namespace SomerenUI
                 catch (Exception e)
                 {
                     MessageBox.Show("Something went wrong while loading the activities: " + e.Message);
+                }
+            }
+            else if (panelName == "Activity Participants")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+                pnlDrinks.Hide();
+                pnlCashRegister.Hide();
+                pnlReport.Hide();
+                pnlActivity.Hide();
+                pnlSupervisors.Hide();
+
+                //show supervisors
+                pnlParticipants.Show();
+
+                try
+                {
+                    // fill the activities listview within the activities panel with a list of activities
+                    List<Activity> activityList = activityService.GetActivities();
+
+                    // clear the listview before filling it again
+                    listViewActivityParticipants.Clear();
+                    listViewActivityParticipants.View = View.Details; // Enable rows
+                    listViewActivityParticipants.Columns.Add("Activity ID"); // Add colums
+                    listViewActivityParticipants.Columns.Add("Description");
+                    listViewActivityParticipants.Columns.Add("Start Time");
+                    listViewActivityParticipants.Columns.Add("End Time");
+
+                    listViewActivityParticipants.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Activity a in activityList)
+                    {
+                        ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                        listViewActivityParticipants.Items.Add(li);
+                        li.Tag = a;
+                    }
+                    listViewActivityParticipants.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewActivityParticipants.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);    // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the activity participants: " + e.Message);
+                }
+            }
+            else if (panelName == "Activity Supervisors")
+            {
+                // hide all other panels
+                pnlDashboard.Hide();
+                imgDashboard.Hide();
+                pnlStudents.Hide();
+                pnlTeachers.Hide();
+                pnlRooms.Hide();
+                pnlDrinks.Hide();
+                pnlCashRegister.Hide();
+                pnlReport.Hide();
+                pnlActivity.Hide();
+                pnlParticipants.Hide();
+
+                //show supervisors
+                pnlSupervisors.Show();
+
+                try
+                {
+                    // fill the activities listview within the activities panel with a list of activities
+                    List<Activity> activityList = activityService.GetActivities();
+
+                    // clear the listview before filling it again
+                    listViewActivitySupervisors.Clear();
+                    listViewActivitySupervisors.View = View.Details; // Enable rows
+                    listViewActivitySupervisors.Columns.Add("Activity ID"); // Add colums
+                    listViewActivitySupervisors.Columns.Add("Description");
+                    listViewActivitySupervisors.Columns.Add("Start Time");
+                    listViewActivitySupervisors.Columns.Add("End Time");
+
+                    listViewActivitySupervisors.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Activity a in activityList)
+                    {
+                        ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
+                        listViewActivitySupervisors.Items.Add(li);
+                        li.Tag = a;
+                    }
+                    listViewActivitySupervisors.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewActivitySupervisors.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);    // Make sure headers fit
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong while loading the activity supervisors: " + e.Message);
                 }
             }
         }
@@ -426,6 +541,16 @@ namespace SomerenUI
         private void activitiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showPanel("Activities");
+        }
+
+        private void activitySupervisorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Activity Participants");
+        }
+
+        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showPanel("Activity Supervisors");
         }
         //actions for listview drinks
         private void listviewDrinks_SelectedIndexChanged(object sender, EventArgs e)
@@ -668,7 +793,7 @@ namespace SomerenUI
             List<Activity> activityl = activityService.GetActivities();
             Activity activity = new Activity(); //create a new object
             List<string> list = new List<string>(); //create a list of strings 
-            foreach(Activity a in activityl)//add activities to the string list
+            foreach (Activity a in activityl)//add activities to the string list
             {
                 list.Add(a.Description);
             }
@@ -678,7 +803,7 @@ namespace SomerenUI
             activity.EndTime = monthEnd.Value;
             try
             {
-                if(!list.Contains(activity.Description))//if the list dont contains the activity add it, otherwise show the message box
+                if (!list.Contains(activity.Description))//if the list dont contains the activity add it, otherwise show the message box
                 {
                     activityService.AddActivity(activity);
                 }
@@ -700,6 +825,176 @@ namespace SomerenUI
                 ListViewItem li = new ListViewItem(new String[] { a.ID.ToString(), a.Description, a.StartTime.ToString("dd/MM/yyyy HH:mm"), a.EndTime.ToString("dd/MM/yyyy HH:mm") });
                 listViewActivity.Items.Add(li);
                 li.Tag = a;
+            }
+        }
+        //Assignment 4 Variant C : Activity Participant
+        private void listViewActivityParticipants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewActivityParticipants.SelectedItems.Count == 1)
+            {
+                try
+                {
+                    // fill the participants listview
+                    List<Student> participantsList = studentService.GetParticipants(); //getparticipants
+
+                    // clear the listview before filling it again
+                    listViewParticipants.Clear();
+                    listViewParticipants.View = View.Details; // Enable rows
+                    listViewParticipants.Columns.Add("Participant ID"); // Add colums
+                    listViewParticipants.Columns.Add("First Name");
+                    listViewParticipants.Columns.Add("Last Name");
+
+                    listViewParticipants.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Student s in participantsList)
+                    {
+                        ListViewItem li = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName, s.LastName });
+                        listViewParticipants.Items.Add(li);
+                        li.Tag = s;
+                    }
+                    listViewParticipants.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewParticipants.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);    // Make sure headers fit
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Something went wrong while loading the participants: " + exp.Message);
+                }
+            }
+        }
+
+        private void listViewParticipants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveParticipant.Enabled = listViewParticipants.SelectedItems.Count >= 0;
+        }
+        //remove participant button
+        private void btnRemoveParticipant_Click_1(object sender, EventArgs e)
+        {
+            if (listViewParticipants.SelectedItems.Count == 1)
+            {
+                Student participant = (Student)listViewParticipants.SelectedItems[0].Tag;
+                try
+                {
+                    DialogResult dialogResult = MessageBox.Show($"Are you sure you wish to remove this participant ({participant.FirstName}) ?", "Remove Participant", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        studentService.RemoveParticipant(participant);
+                    }
+                    else
+                        return;
+                }
+                catch (Exception exp) //if theres any error show in the label
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = "Error occured: " + exp.Message;
+                }
+                //refresh
+                listViewParticipants.Items.Clear();
+                List<Student> participantsList = studentService.GetParticipants();
+                foreach (Student s in participantsList)
+                {
+                    ListViewItem li = new ListViewItem(new String[] { s.Number.ToString(), s.FirstName, s.LastName });
+                    listViewParticipants.Items.Add(li);
+                    li.Tag = s;
+                }
+            }
+        }
+        //add participant button
+        private void btnAddParticipant_Click(object sender, EventArgs e)
+        {
+            StudentService activityParticipantService = new StudentService();
+            ListViewItem item = listViewActivityParticipants.SelectedItems[0];
+            Student participant = (Student)item.Tag;
+
+            ListViewItem item2 = listViewParticipants.SelectedItems[0];
+            Activity activityParticipant = (Activity)item2.Tag;
+
+            activityParticipantService.AddParticipant(participant, activityParticipant);
+            List<Student> studentsList = studentService.GetParticipants();
+            Student student = new Student(); //create a new object
+            List<string> list = new List<string>(); //create a list of strings 
+            foreach (Student s in studentsList)//add activities to the string list
+            {
+                list.Add(s.Number.ToString());
+            }
+            //refreshing the list with activities
+            listViewParticipants.Items.Clear();
+            List<Student> studentList = studentService.GetParticipants();
+            foreach (Student s in studentList)
+            {
+                ListViewItem list1 = new ListViewItem(new String[] { s.Number.ToString() });
+                listViewActivity.Items.Add(list1);
+                list1.Tag = s;
+            }
+        }
+        //Assignment 4 Variant B : Activity Supervisors (Alexandru did this part)
+        private void listViewActivitySupervisors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewActivitySupervisors.SelectedItems.Count == 1)
+            {
+                try
+                {
+                    // fill the participants listview
+                    List<Teacher> supervisorsList = teacherService.GetSupervisors(); //get supervisors
+
+                    // clear the listview before filling it again
+                    listViewSupervisors.Clear();
+                    listViewSupervisors.View = View.Details; // Enable rows
+                    listViewSupervisors.Columns.Add("Supervisor ID"); // Add colums
+                    listViewSupervisors.Columns.Add("First Name");
+                    listViewSupervisors.Columns.Add("Last Name");
+
+                    listViewSupervisors.FullRowSelect = true; //Select the item and subitems when selection is made. 
+
+                    foreach (Teacher t in supervisorsList)
+                    {
+                        ListViewItem li = new ListViewItem(new String[] { t.Number.ToString(), t.FirstName, t.LastName });
+                        listViewParticipants.Items.Add(li);
+                        li.Tag = t;
+                    }
+                    listViewSupervisors.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent); //Auto resize colums to fit data
+                    listViewSupervisors.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);    // Make sure headers fit
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Something went wrong while loading the supervisors: " + exp.Message);
+                }
+            }
+        }
+
+        private void listViewSupervisors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveSupervisor.Enabled = listViewSupervisors.SelectedItems.Count >= 0;
+        }
+        //remove supervisor
+        private void btnRemoveSupervisor_Click(object sender, EventArgs e)
+        {
+            if (listViewSupervisors.SelectedItems.Count == 1)
+            {
+                Teacher supervisor = (Teacher)listViewSupervisors.SelectedItems[0].Tag;
+                try
+                {
+                    DialogResult dialogResult = MessageBox.Show($"Are you sure you wish to remove this supervisor ({supervisor.FirstName}) ?", "Remove Supervisor", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        teacherService.RemoveSupervisor(supervisor);
+                    }
+                    else
+                        return;
+                }
+                catch (Exception exp) //if theres any error show in the label
+                {
+                    lblE.Visible = true;
+                    lblE.Text = "Error occured: " + exp.Message;
+                }
+                //refresh
+                listViewSupervisors.Items.Clear();
+                List<Teacher> supervisorsList = teacherService.GetSupervisors();
+                foreach (Teacher t in supervisorsList)
+                {
+                    ListViewItem li = new ListViewItem(new String[] { t.Number.ToString(), t.FirstName, t.LastName });
+                    listViewSupervisors.Items.Add(li);
+                    li.Tag = t;
+                }
             }
         }
     }

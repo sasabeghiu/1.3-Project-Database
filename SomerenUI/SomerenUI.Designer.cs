@@ -38,6 +38,7 @@
             this.studentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lecturersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.activitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activitySupervisorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.roomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drinkSuppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cashRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +89,7 @@
             this.lbl_CashRegister = new System.Windows.Forms.Label();
             this.listViewCashRegisterStudents = new System.Windows.Forms.ListView();
             this.pnlReport = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnReport = new System.Windows.Forms.Button();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.lbl_Report = new System.Windows.Forms.Label();
@@ -108,7 +110,23 @@
             this.img_Activity = new System.Windows.Forms.PictureBox();
             this.lblActivity = new System.Windows.Forms.Label();
             this.listViewActivity = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pnlParticipants = new System.Windows.Forms.Panel();
+            this.lblErr = new System.Windows.Forms.Label();
+            this.btnAddParticipant = new System.Windows.Forms.Button();
+            this.btnRemoveParticipant = new System.Windows.Forms.Button();
+            this.listViewParticipants = new System.Windows.Forms.ListView();
+            this.img_Participants = new System.Windows.Forms.PictureBox();
+            this.lblParticipants = new System.Windows.Forms.Label();
+            this.listViewActivityParticipants = new System.Windows.Forms.ListView();
+            this.pnlSupervisors = new System.Windows.Forms.Panel();
+            this.lblE = new System.Windows.Forms.Label();
+            this.btnAddSupervisor = new System.Windows.Forms.Button();
+            this.btnRemoveSupervisor = new System.Windows.Forms.Button();
+            this.listViewSupervisors = new System.Windows.Forms.ListView();
+            this.img_Supervisors = new System.Windows.Forms.PictureBox();
+            this.lblSupervisors = new System.Windows.Forms.Label();
+            this.listViewActivitySupervisors = new System.Windows.Forms.ListView();
+            this.activitySupervisorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.imgDashboard)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.pnlDashboard.SuspendLayout();
@@ -126,6 +144,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.img_Report)).BeginInit();
             this.pnlActivity.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_Activity)).BeginInit();
+            this.pnlParticipants.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Participants)).BeginInit();
+            this.pnlSupervisors.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Supervisors)).BeginInit();
             this.SuspendLayout();
             // 
             // imgDashboard
@@ -199,10 +221,20 @@
             // 
             // activitiesToolStripMenuItem
             // 
+            this.activitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.activitySupervisorToolStripMenuItem,
+            this.activitySupervisorsToolStripMenuItem});
             this.activitiesToolStripMenuItem.Name = "activitiesToolStripMenuItem";
             this.activitiesToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.activitiesToolStripMenuItem.Text = "Activities";
             this.activitiesToolStripMenuItem.Click += new System.EventHandler(this.activitiesToolStripMenuItem_Click);
+            // 
+            // activitySupervisorToolStripMenuItem
+            // 
+            this.activitySupervisorToolStripMenuItem.Name = "activitySupervisorToolStripMenuItem";
+            this.activitySupervisorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activitySupervisorToolStripMenuItem.Text = "Activity Participants";
+            this.activitySupervisorToolStripMenuItem.Click += new System.EventHandler(this.activitySupervisorToolStripMenuItem_Click);
             // 
             // roomsToolStripMenuItem
             // 
@@ -641,6 +673,15 @@
             this.pnlReport.Size = new System.Drawing.Size(935, 463);
             this.pnlReport.TabIndex = 20;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(560, 222);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(212, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Select a range of dates and press calculate";
+            // 
             // btnReport
             // 
             this.btnReport.Location = new System.Drawing.Point(715, 322);
@@ -847,20 +888,195 @@
             this.listViewActivity.UseCompatibleStateImageBehavior = false;
             this.listViewActivity.SelectedIndexChanged += new System.EventHandler(this.listViewActivity_SelectedIndexChanged);
             // 
-            // label1
+            // pnlParticipants
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(560, 222);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(212, 13);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "Select a range of dates and press calculate";
+            this.pnlParticipants.Controls.Add(this.lblErr);
+            this.pnlParticipants.Controls.Add(this.btnAddParticipant);
+            this.pnlParticipants.Controls.Add(this.btnRemoveParticipant);
+            this.pnlParticipants.Controls.Add(this.listViewParticipants);
+            this.pnlParticipants.Controls.Add(this.img_Participants);
+            this.pnlParticipants.Controls.Add(this.lblParticipants);
+            this.pnlParticipants.Controls.Add(this.listViewActivityParticipants);
+            this.pnlParticipants.Location = new System.Drawing.Point(6, 27);
+            this.pnlParticipants.Name = "pnlParticipants";
+            this.pnlParticipants.Size = new System.Drawing.Size(935, 463);
+            this.pnlParticipants.TabIndex = 23;
+            // 
+            // lblErr
+            // 
+            this.lblErr.AutoSize = true;
+            this.lblErr.ForeColor = System.Drawing.Color.Red;
+            this.lblErr.Location = new System.Drawing.Point(15, 419);
+            this.lblErr.Name = "lblErr";
+            this.lblErr.Size = new System.Drawing.Size(16, 13);
+            this.lblErr.TabIndex = 12;
+            this.lblErr.Text = "...";
+            // 
+            // btnAddParticipant
+            // 
+            this.btnAddParticipant.Location = new System.Drawing.Point(686, 409);
+            this.btnAddParticipant.Name = "btnAddParticipant";
+            this.btnAddParticipant.Size = new System.Drawing.Size(116, 23);
+            this.btnAddParticipant.TabIndex = 11;
+            this.btnAddParticipant.Text = "Add Participant";
+            this.btnAddParticipant.UseVisualStyleBackColor = true;
+            this.btnAddParticipant.Click += new System.EventHandler(this.btnAddParticipant_Click);
+            // 
+            // btnRemoveParticipant
+            // 
+            this.btnRemoveParticipant.Location = new System.Drawing.Point(686, 377);
+            this.btnRemoveParticipant.Name = "btnRemoveParticipant";
+            this.btnRemoveParticipant.Size = new System.Drawing.Size(116, 23);
+            this.btnRemoveParticipant.TabIndex = 10;
+            this.btnRemoveParticipant.Text = "Remove Participant";
+            this.btnRemoveParticipant.UseVisualStyleBackColor = true;
+            this.btnRemoveParticipant.Click += new System.EventHandler(this.btnRemoveParticipant_Click_1);
+            // 
+            // listViewParticipants
+            // 
+            this.listViewParticipants.GridLines = true;
+            this.listViewParticipants.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewParticipants.HideSelection = false;
+            this.listViewParticipants.Location = new System.Drawing.Point(422, 42);
+            this.listViewParticipants.Name = "listViewParticipants";
+            this.listViewParticipants.Size = new System.Drawing.Size(380, 321);
+            this.listViewParticipants.TabIndex = 9;
+            this.listViewParticipants.UseCompatibleStateImageBehavior = false;
+            this.listViewParticipants.SelectedIndexChanged += new System.EventHandler(this.listViewParticipants_SelectedIndexChanged);
+            // 
+            // img_Participants
+            // 
+            this.img_Participants.Image = global::SomerenUI.Properties.Resources.someren;
+            this.img_Participants.InitialImage = ((System.Drawing.Image)(resources.GetObject("img_Participants.InitialImage")));
+            this.img_Participants.Location = new System.Drawing.Point(805, 0);
+            this.img_Participants.Name = "img_Participants";
+            this.img_Participants.Size = new System.Drawing.Size(130, 123);
+            this.img_Participants.TabIndex = 8;
+            this.img_Participants.TabStop = false;
+            // 
+            // lblParticipants
+            // 
+            this.lblParticipants.AutoSize = true;
+            this.lblParticipants.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblParticipants.Location = new System.Drawing.Point(10, 10);
+            this.lblParticipants.Name = "lblParticipants";
+            this.lblParticipants.Size = new System.Drawing.Size(217, 29);
+            this.lblParticipants.TabIndex = 7;
+            this.lblParticipants.Text = "Activity Participants";
+            // 
+            // listViewActivityParticipants
+            // 
+            this.listViewActivityParticipants.GridLines = true;
+            this.listViewActivityParticipants.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewActivityParticipants.HideSelection = false;
+            this.listViewActivityParticipants.Location = new System.Drawing.Point(18, 42);
+            this.listViewActivityParticipants.Name = "listViewActivityParticipants";
+            this.listViewActivityParticipants.Size = new System.Drawing.Size(380, 321);
+            this.listViewActivityParticipants.TabIndex = 6;
+            this.listViewActivityParticipants.UseCompatibleStateImageBehavior = false;
+            this.listViewActivityParticipants.SelectedIndexChanged += new System.EventHandler(this.listViewActivityParticipants_SelectedIndexChanged);
+            // 
+            // pnlSupervisors
+            // 
+            this.pnlSupervisors.Controls.Add(this.lblE);
+            this.pnlSupervisors.Controls.Add(this.btnAddSupervisor);
+            this.pnlSupervisors.Controls.Add(this.btnRemoveSupervisor);
+            this.pnlSupervisors.Controls.Add(this.listViewSupervisors);
+            this.pnlSupervisors.Controls.Add(this.img_Supervisors);
+            this.pnlSupervisors.Controls.Add(this.lblSupervisors);
+            this.pnlSupervisors.Controls.Add(this.listViewActivitySupervisors);
+            this.pnlSupervisors.Location = new System.Drawing.Point(3, 27);
+            this.pnlSupervisors.Name = "pnlSupervisors";
+            this.pnlSupervisors.Size = new System.Drawing.Size(935, 463);
+            this.pnlSupervisors.TabIndex = 24;
+            // 
+            // lblE
+            // 
+            this.lblE.AutoSize = true;
+            this.lblE.ForeColor = System.Drawing.Color.Red;
+            this.lblE.Location = new System.Drawing.Point(15, 419);
+            this.lblE.Name = "lblE";
+            this.lblE.Size = new System.Drawing.Size(16, 13);
+            this.lblE.TabIndex = 12;
+            this.lblE.Text = "...";
+            // 
+            // btnAddSupervisor
+            // 
+            this.btnAddSupervisor.Location = new System.Drawing.Point(686, 409);
+            this.btnAddSupervisor.Name = "btnAddSupervisor";
+            this.btnAddSupervisor.Size = new System.Drawing.Size(116, 23);
+            this.btnAddSupervisor.TabIndex = 11;
+            this.btnAddSupervisor.Text = "Add Supervisor";
+            this.btnAddSupervisor.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveSupervisor
+            // 
+            this.btnRemoveSupervisor.Location = new System.Drawing.Point(686, 377);
+            this.btnRemoveSupervisor.Name = "btnRemoveSupervisor";
+            this.btnRemoveSupervisor.Size = new System.Drawing.Size(116, 23);
+            this.btnRemoveSupervisor.TabIndex = 10;
+            this.btnRemoveSupervisor.Text = "Remove Supervisor";
+            this.btnRemoveSupervisor.UseVisualStyleBackColor = true;
+            this.btnRemoveSupervisor.Click += new System.EventHandler(this.btnRemoveSupervisor_Click);
+            // 
+            // listViewSupervisors
+            // 
+            this.listViewSupervisors.GridLines = true;
+            this.listViewSupervisors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewSupervisors.HideSelection = false;
+            this.listViewSupervisors.Location = new System.Drawing.Point(422, 42);
+            this.listViewSupervisors.Name = "listViewSupervisors";
+            this.listViewSupervisors.Size = new System.Drawing.Size(380, 321);
+            this.listViewSupervisors.TabIndex = 9;
+            this.listViewSupervisors.UseCompatibleStateImageBehavior = false;
+            this.listViewSupervisors.SelectedIndexChanged += new System.EventHandler(this.listViewSupervisors_SelectedIndexChanged);
+            // 
+            // img_Supervisors
+            // 
+            this.img_Supervisors.Image = global::SomerenUI.Properties.Resources.someren;
+            this.img_Supervisors.InitialImage = ((System.Drawing.Image)(resources.GetObject("img_Supervisors.InitialImage")));
+            this.img_Supervisors.Location = new System.Drawing.Point(805, 0);
+            this.img_Supervisors.Name = "img_Supervisors";
+            this.img_Supervisors.Size = new System.Drawing.Size(130, 123);
+            this.img_Supervisors.TabIndex = 8;
+            this.img_Supervisors.TabStop = false;
+            // 
+            // lblSupervisors
+            // 
+            this.lblSupervisors.AutoSize = true;
+            this.lblSupervisors.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSupervisors.Location = new System.Drawing.Point(10, 10);
+            this.lblSupervisors.Name = "lblSupervisors";
+            this.lblSupervisors.Size = new System.Drawing.Size(220, 29);
+            this.lblSupervisors.TabIndex = 7;
+            this.lblSupervisors.Text = "Activity Supervisors";
+            // 
+            // listViewActivitySupervisors
+            // 
+            this.listViewActivitySupervisors.GridLines = true;
+            this.listViewActivitySupervisors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewActivitySupervisors.HideSelection = false;
+            this.listViewActivitySupervisors.Location = new System.Drawing.Point(18, 42);
+            this.listViewActivitySupervisors.Name = "listViewActivitySupervisors";
+            this.listViewActivitySupervisors.Size = new System.Drawing.Size(380, 321);
+            this.listViewActivitySupervisors.TabIndex = 6;
+            this.listViewActivitySupervisors.UseCompatibleStateImageBehavior = false;
+            this.listViewActivitySupervisors.SelectedIndexChanged += new System.EventHandler(this.listViewActivitySupervisors_SelectedIndexChanged);
+            // 
+            // activitySupervisorsToolStripMenuItem
+            // 
+            this.activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
+            this.activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activitySupervisorsToolStripMenuItem.Text = "Activity Supervisors";
+            this.activitySupervisorsToolStripMenuItem.Click += new System.EventHandler(this.activitySupervisorsToolStripMenuItem_Click);
             // 
             // SomerenUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 505);
+            this.Controls.Add(this.pnlSupervisors);
+            this.Controls.Add(this.pnlParticipants);
             this.Controls.Add(this.pnlActivity);
             this.Controls.Add(this.pnlReport);
             this.Controls.Add(this.pnlCashRegister);
@@ -902,6 +1118,12 @@
             this.pnlActivity.ResumeLayout(false);
             this.pnlActivity.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_Activity)).EndInit();
+            this.pnlParticipants.ResumeLayout(false);
+            this.pnlParticipants.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Participants)).EndInit();
+            this.pnlSupervisors.ResumeLayout(false);
+            this.pnlSupervisors.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_Supervisors)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -989,6 +1211,24 @@
         private System.Windows.Forms.DateTimePicker monthStart;
         private System.Windows.Forms.DateTimePicker monthEnd;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem activitySupervisorToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlParticipants;
+        private System.Windows.Forms.PictureBox img_Participants;
+        private System.Windows.Forms.Label lblParticipants;
+        private System.Windows.Forms.ListView listViewActivityParticipants;
+        private System.Windows.Forms.ListView listViewParticipants;
+        private System.Windows.Forms.Button btnAddParticipant;
+        private System.Windows.Forms.Button btnRemoveParticipant;
+        private System.Windows.Forms.Label lblErr;
+        private System.Windows.Forms.ToolStripMenuItem activitySupervisorsToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlSupervisors;
+        private System.Windows.Forms.Label lblE;
+        private System.Windows.Forms.Button btnAddSupervisor;
+        private System.Windows.Forms.Button btnRemoveSupervisor;
+        private System.Windows.Forms.ListView listViewSupervisors;
+        private System.Windows.Forms.PictureBox img_Supervisors;
+        private System.Windows.Forms.Label lblSupervisors;
+        private System.Windows.Forms.ListView listViewActivitySupervisors;
     }
 }
 

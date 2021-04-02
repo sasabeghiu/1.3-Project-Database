@@ -23,5 +23,20 @@ namespace SomerenLogic
             List<Teacher> teachers = teacherdb.GetAllTeachers();
             return teachers;
         }
+        public List<Teacher> GetSupervisors()
+        {
+            List<Teacher> supervisors = teacherdb.GetAllSupervisors();
+            return supervisors;
+        }
+
+        public void AddSupervisor(Teacher teacher, Activity activity)
+        {
+            teacherdb.AddSupervisor(teacher, activity);
+        }
+
+        public void RemoveSupervisor(Teacher teacher)
+        {
+            teacherdb.RemoveSupervisor(teacher);
+        }
     }
 }

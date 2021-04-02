@@ -36,5 +36,53 @@ namespace SomerenDAL
             }
             return students;
         }
+        //list of participants
+        public List<Student> GetAllParticipants()
+        {
+            string query = "SELECT StudentId, FirstName, LastName, DateOfBirth FROM [Student]" +
+                           "WHERE Participant LIKE 'y%'"; // selecting the students that are participants
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        //add participant
+        public void AddParticipant(Student student, Activity activity)
+        {
+            try
+            {
+                OpenConnection();
+                string query = "INSERT INTO ActivityStudent (ActivityId, StudentId)" +
+                               "VALUES('" + activity.ID + "','" + student.Number + "') ;";
+                SqlParameter[] sqlParameters = new SqlParameter[0];
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("Adding participants failed: " + exp);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        //remove participant
+        public void RemoveParticipant(Student student)
+        {
+            try
+            {
+                OpenConnection();
+                string query = "DELETE FROM Student WHERE [StudentId]=" + student.Number;
+                SqlParameter[] sqlParameters = new SqlParameter[0];
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("Deleting participant failed: " + exp);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
     }
 }
