@@ -1,11 +1,6 @@
 ﻿using SomerenDAL;
 using SomerenModel;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomerenLogic
 {
@@ -17,24 +12,12 @@ namespace SomerenLogic
         {
             logindb = new LoginDao();
         }
-
+        //get all users
         public List<Login> GetAllLogins()
         {
             return logindb.GetLogins();
         }
-
-        public Login GetUser(string username, string password)
-        {
-            Login login = logindb.GetUser(username, password);
-            return login;
-        }
-
-        public Login GetUsername(string username)
-        {
-            Login login = logindb.GetUsername(username);
-            return login;
-        }
-
+        //add user
         public void AddUser(Login user)
         {
             logindb.AddNewAccount(user);

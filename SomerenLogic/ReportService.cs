@@ -1,11 +1,6 @@
 ﻿using SomerenDAL;
 using SomerenModel;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomerenLogic
 {
@@ -17,6 +12,7 @@ namespace SomerenLogic
         {
             reportdb = new ReportDao();
         }
+        //get a list with all reports
         public List<Report> GetAllReports()
         {
             return reportdb.GetAllReports();

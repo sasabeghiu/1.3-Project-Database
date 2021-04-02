@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.ObjectModel;
 using SomerenModel;
 
 namespace SomerenDAL
 {
     public class TeacherDao : BaseDao
     {
+        //returns a list of lecturers
         public List<Teacher> GetAllTeachers()
         {
             string query = "SELECT TeacherId, FirstName, LastName, Supervisor FROM [Teacher]";
@@ -36,7 +33,8 @@ namespace SomerenDAL
             }
             return teachers;
         }
-        //list of supervisors
+
+        //returns a list of supervisors
         public List<Teacher> GetAllSupervisors()
         {
             string query = "SELECT TeacherId, FirstName, LastName, Supervisor FROM [Teacher]" +
@@ -65,6 +63,7 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //remove supervisors
         public void RemoveSupervisor(Teacher teacher)
         {
@@ -77,7 +76,7 @@ namespace SomerenDAL
             }
             catch (Exception exp)
             {
-                throw new Exception("Deleting supervisor failed: " + exp);
+                throw new Exception("Removing supervisor failed: " + exp);
             }
             finally
             {

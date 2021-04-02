@@ -2,39 +2,35 @@
 using SomerenModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomerenLogic
 {
     public class DrinkService
     {
         DrinkDao drinkdb;
-
-        public DrinkService() //basic constructor creating an dao object
+        //basic constructor creating an dao object
+        public DrinkService()
         {
             drinkdb = new DrinkDao();
         }
-
-        public List<Drink> GetDrinks() //get a list with all drinks from db
+        //get a list with all drinks from db
+        public List<Drink> GetDrinks()
         {
             List<Drink> drinks = drinkdb.GetAllDrinks();
             return drinks;
         }
-       
-        public void AddDrink(Drink drink) //adds a drink using the method from dao class
+        //adds a drink using the method from dao class
+        public void AddDrink(Drink drink)
         {
             drinkdb.AddDrink(drink);
         }
-        
-        public void UpdateDrink(Drink drink) //updates a drink using the method from dao class
+        //updates a drink using the method from dao class
+        public void UpdateDrink(Drink drink)
         {
             drinkdb.UpdateDrink(drink);
         }
-        
-        public void RemoveDrink(Drink drink) //removes a drink using the method from dao class
+        //removes a drink using the method from dao class
+        public void RemoveDrink(Drink drink)
         {
             drinkdb.RemoveDrink(drink);
         }

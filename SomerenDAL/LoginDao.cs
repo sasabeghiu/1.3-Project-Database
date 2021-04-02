@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.ObjectModel;
 using SomerenModel;
-using System.Configuration;
 
 namespace SomerenDAL
 {
     public class LoginDao : BaseDao
     {
+        //getting all users from database (login was a bad name)
         public List<Login> GetLogins()
         {
             string query = "SELECT Username, Password FROM Login";
@@ -36,38 +31,7 @@ namespace SomerenDAL
             return logins;
         }
 
-        public Login GetUser(string username, string password)
-        {
-            string query = $"SELECT Username, Password FROM [Login] WHERE Username = '{username}' AND Password = '{password}'";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            List<Login> users = ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
-            if (users.Count == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return users[0];
-            }
-        }
-
-        public Login GetUsername(string username)
-        {
-            string query = $"SELECT Username, Password FROM [Login] WHERE Username = '{username}'";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            List<Login> users = ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
-            if (users.Count == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return users[0];
-            }
-        }
-
+        //adding a new user
         public void AddNewAccount(Login user)
         {
             string query = $"INSERT INTO [Login] (Username, Password) Values ('{user.Username}','{user.Password}') ";

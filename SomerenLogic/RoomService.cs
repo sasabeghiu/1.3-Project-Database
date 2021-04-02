@@ -1,11 +1,6 @@
 ﻿using SomerenDAL;
 using SomerenModel;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomerenLogic
 {
@@ -17,7 +12,7 @@ namespace SomerenLogic
         {
             roomdb = new RoomDao();
         }
-
+        //returns a lsit with rooms
         public List<Room> GetRooms()
         {
             List<Room> rooms = roomdb.GetAllRooms();

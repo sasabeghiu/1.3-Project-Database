@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.ObjectModel;
 using SomerenModel;
 
 namespace SomerenDAL
 {
     public class StudentDao : BaseDao
     {
+        //returns a list of students
         public List<Student> GetAllStudents()
         {
             string query = "SELECT StudentId, FirstName, LastName, DateOfBirth FROM [Student]"; // selecting the information we need from database
@@ -36,7 +33,8 @@ namespace SomerenDAL
             }
             return students;
         }
-        //list of participants
+
+        //returns a list with all participants
         public List<Student> GetAllParticipants()
         {
             string query = "SELECT StudentId, FirstName, LastName, DateOfBirth FROM [Student]" +
@@ -65,6 +63,7 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //remove participant
         public void RemoveParticipant(Student student)
         {

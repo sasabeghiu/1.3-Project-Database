@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.ObjectModel;
 using SomerenModel;
-using System.Configuration;
 
 namespace SomerenDAL
 {
@@ -59,23 +54,21 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //add activity
         public void AddActivity(Activity activity)
         {
             try
             {
                 OpenConnection();
-                string query = "INSERT INTO Activity (Description, StartDateTime, EndDateTime)" +
-                               "VALUES('" + activity.Description + "','" + activity.StartTime + "','" + activity.EndTime + "');";
-
-                string q = "SELECT * FROM Activity " +
+                string query = "SELECT * FROM Activity " +
                     $"If not exists (Select * from Activity where ActivityID = '{activity.ID}') " +
                     $"BEGIN " +
                     $"Insert into Activity(Description, StartDateTime, EndDateTime) " +
                     $"VALUES('" + activity.Description + "','" + activity.StartTime + "','" + activity.EndTime + "') " +
                     "End";
                 SqlParameter[] sqlParameters = new SqlParameter[0];
-                ExecuteEditQuery(q, sqlParameters);
+                ExecuteEditQuery(query, sqlParameters);
             }
             catch (Exception exp)
             {
@@ -86,6 +79,7 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //modify activity
         public void ModifyActivity(Activity activity)
         {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
-using System.Collections.ObjectModel;
-using SomerenModel;
-using System.Configuration;
+﻿using SomerenModel;
 using SomerenDAL;
 
 namespace SomerenLogic
@@ -22,7 +13,7 @@ namespace SomerenLogic
             student = new StudentDao();
             drink = new DrinkDao();
         }
-
+        //add the drink and the student that bought it to database
         public void AddStudentDrink(Student student, Drink drink)
         {
             CashRegisterDao studentDrink = new CashRegisterDao();

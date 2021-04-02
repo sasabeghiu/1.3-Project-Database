@@ -29,7 +29,6 @@ namespace SomerenUI
                 if ((log.Username == txtUsername.Text) && (log.Password == txtPassword.Text)) //checks the username and password in database
                 {
                     this.Hide();
-
                     SomerenUI someren = new SomerenUI();
                     someren.ShowDialog();
                     this.Close();
@@ -47,6 +46,7 @@ namespace SomerenUI
             }
         }
 
+        //when you click on sign up button a registration form will appear
         private void btnSignup_Click(object sender, EventArgs e)
         {
             this.Hide();

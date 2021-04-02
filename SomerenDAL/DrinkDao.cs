@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using System.Collections.ObjectModel;
 using SomerenModel;
-using System.Configuration;
 
 namespace SomerenDAL
 {
     public class DrinkDao : BaseDao
     {
         //returns a list of drinks from database
-        public List<Drink> GetAllDrinks()                                       
+        public List<Drink> GetAllDrinks()
         {
             string query = "SELECT DrinkId, Name, Stock, Price " +     // Select all drinks 
                            "FROM [Drink] " +
@@ -45,6 +40,7 @@ namespace SomerenDAL
             }
             return drinks;
         }
+
         //add drink
         public void AddDrink(Drink drink)
         {
@@ -52,7 +48,7 @@ namespace SomerenDAL
             {
                 OpenConnection();
                 string query = "INSERT INTO Drink (Name, Stock, Price)" +
-                               "VALUES('"+drink.Name+"','"+drink.Stock+"','"+drink.Price+"') ;";
+                               "VALUES('" + drink.Name + "','" + drink.Stock + "','" + drink.Price + "') ;";
                 SqlParameter[] sqlParameters = new SqlParameter[0];
                 ExecuteEditQuery(query, sqlParameters);
             }
@@ -65,6 +61,7 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //modify drink
         public void UpdateDrink(Drink drink)
         {
@@ -85,6 +82,7 @@ namespace SomerenDAL
                 CloseConnection();
             }
         }
+
         //remove drink
         public void RemoveDrink(Drink drink)
         {

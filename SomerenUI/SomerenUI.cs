@@ -2,12 +2,6 @@
 using SomerenModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SomerenUI
@@ -31,7 +25,7 @@ namespace SomerenUI
             activityService = new ActivityService();
             teacherService = new TeacherService();
 
-            //make the delete button unable to use untill an item is selected and hide the label until there is an error
+            //hide the labels and some buttons untill they will be used
             btnDeleteDrink.Enabled = false;
             btnRemoveActivity.Enabled = false;
             lbl_Error.Visible = false;
@@ -861,7 +855,7 @@ namespace SomerenUI
                 }
             }
         }
-
+        //participants list
         private void listViewParticipants_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemoveParticipant.Enabled = listViewParticipants.SelectedItems.Count >= 0;
@@ -960,7 +954,7 @@ namespace SomerenUI
                 }
             }
         }
-
+        //supervisors list
         private void listViewSupervisors_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemoveSupervisor.Enabled = listViewSupervisors.SelectedItems.Count >= 0;
